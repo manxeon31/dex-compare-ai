@@ -1,173 +1,187 @@
-const initialCapabilities = [
-  [
-    "endpoint-telemetry",
-    "Endpoint telemetry",
-    "Observability",
-    4,
-    4,
-    12,
-    "Medium",
-    "Documented",
-    "",
-    "Validate telemetry freshness, sampling, and non-OEM device fidelity."
-  ],
-  [
-    "multi-vendor",
-    "Multi-vendor / OEM-agnostic support",
-    "Coverage",
-    4,
-    3,
-    10,
-    "Low",
-    "Claimed",
-    "",
-    "HP claims broad OEM/OS coverage. Require API/demo proof."
-  ],
-  [
-    "employee-sentiment",
-    "Employee sentiment",
-    "Experience",
-    5,
-    3,
-    8,
-    "Medium",
-    "Demoed",
-    "",
-    "Compare survey methodology and weighting in experience score."
-  ],
-  [
-    "ai-recommendations",
-    "AI recommendations",
-    "AI",
-    4,
-    4,
-    10,
-    "Low",
-    "Claimed",
-    "",
-    "Validate explainability, false positives, and human approval flow."
-  ],
-  [
-    "genai-assistant",
-    "GenAI assistant",
-    "AI",
-    3,
-    5,
-    8,
-    "Low",
-    "Claimed",
-    "",
-    "Lenovo appears stronger in orchestration narrative. Needs proof."
-  ],
-  [
-    "automated-remediation",
-    "Automated remediation",
-    "Automation",
-    4,
-    4,
-    10,
-    "Low",
-    "Claimed",
-    "",
-    "Compare catalog depth, rollback, approvals, and audit logs."
-  ],
-  [
-    "servicenow",
-    "ServiceNow integration",
-    "Integration",
-    3,
-    5,
-    12,
-    "Medium",
-    "Demoed",
-    "",
-    "Validate CMDB, incident workflow, and AI Control Tower touchpoints."
-  ],
-  [
-    "microsoft",
-    "Microsoft ecosystem integration",
-    "Integration",
-    5,
-    3,
-    8,
-    "Medium",
-    "Documented",
-    "",
-    "Validate Intune, Entra, Power BI, Power Automate, and Teams workflows."
-  ],
-  [
-    "reporting",
-    "Reporting / BI",
-    "Analytics",
-    5,
-    4,
-    8,
-    "Medium",
-    "Documented",
-    "",
-    "Check Power BI/Tableau connectors and export model."
-  ],
-  [
-    "lifecycle",
-    "Hardware refresh / lifecycle",
-    "Lifecycle",
-    4,
-    4,
-    6,
-    "Low",
-    "Claimed",
-    "",
-    "Validate refresh recommendations against warranty, performance, and ticket data."
-  ],
-  [
-    "security",
-    "Security posture",
-    "Security",
-    4,
-    4,
-    5,
-    "Low",
-    "Claimed",
-    "",
-    "Compare vulnerability data, remediation paths, and policy controls."
-  ],
-  [
-    "governance",
-    "Governance / auditability",
-    "Governance",
-    3,
-    4,
-    8,
-    "Low",
-    "Claimed",
-    "",
-    "Validate approval trail, rollback records, and change governance."
-  ]
-].map(
-  ([
-    id,
-    name,
-    group,
-    hpScore,
-    lenovoScore,
-    weight,
-    confidence,
-    evidence,
-    evidenceLinks,
-    notes
-  ]) => ({
-    id,
-    name,
-    group,
-    hpScore,
-    lenovoScore,
-    weight,
-    confidence,
-    evidence,
-    evidenceLinks,
-    notes
-  })
-);
+const categories = [
+  {
+    name: "Endpoint telemetry",
+    weight: 4,
+    hpScore: 4,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Telemetry data source documentation",
+      "Admin console screenshots",
+      "Device-level sample output",
+      "PoC validation result"
+    ]
+  },
+  {
+    name: "AI recommendations",
+    weight: 4,
+    hpScore: 4,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Recommendation logic explanation",
+      "Real workflow demo",
+      "False-positive handling",
+      "Admin override proof"
+    ]
+  },
+  {
+    name: "Automated remediation",
+    weight: 4,
+    hpScore: 4,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Before/after remediation logs",
+      "Rollback behavior",
+      "Approval workflow",
+      "PoC test result"
+    ]
+  },
+  {
+    name: "Hardware refresh / lifecycle",
+    weight: 3,
+    hpScore: 4,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Warranty/lifecycle integration proof",
+      "Battery health data",
+      "Asset aging report",
+      "Refresh recommendation logic"
+    ]
+  },
+  {
+    name: "Security posture",
+    weight: 4,
+    hpScore: 4,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Security data source",
+      "Compliance mapping",
+      "Policy enforcement proof",
+      "Audit trail"
+    ]
+  },
+  {
+    name: "Multi-vendor / OEM-agnostic support",
+    weight: 5,
+    hpScore: 5,
+    lenovoScore: 3,
+    confidence: "Low",
+    evidenceStatus: "Missing",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Supported OEM list",
+      "API documentation",
+      "Known limitations",
+      "Mixed-fleet PoC result"
+    ]
+  },
+  {
+    name: "Employee sentiment",
+    weight: 4,
+    hpScore: 5,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Survey data model",
+      "Sentiment scoring method",
+      "Privacy model",
+      "Sample dashboard"
+    ]
+  },
+  {
+    name: "Microsoft ecosystem integration",
+    weight: 4,
+    hpScore: 5,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Intune integration proof",
+      "Entra ID / RBAC proof",
+      "Microsoft Graph integration",
+      "Export/reporting proof"
+    ]
+  },
+  {
+    name: "Reporting / BI",
+    weight: 2,
+    hpScore: 5,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Export format",
+      "BI connector proof",
+      "Scheduled report demo",
+      "Data dictionary"
+    ]
+  },
+  {
+    name: "GenAI assistant",
+    weight: 4,
+    hpScore: 3,
+    lenovoScore: 5,
+    confidence: "Low",
+    evidenceStatus: "Missing",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Real workflow demo",
+      "Prompt/action boundary",
+      "Data access model",
+      "Admin controls",
+      "Audit logging"
+    ]
+  },
+  {
+    name: "ServiceNow integration",
+    weight: 5,
+    hpScore: 3,
+    lenovoScore: 5,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Ticket creation demo",
+      "Ticket update demo",
+      "Field mapping",
+      "Integration architecture",
+      "SLA impact proof"
+    ]
+  },
+  {
+    name: "Governance / auditability",
+    weight: 3,
+    hpScore: 3,
+    lenovoScore: 4,
+    confidence: "Medium",
+    evidenceStatus: "Partial",
+    evidenceLinks: [],
+    proofNeeded: [
+      "Admin audit trail",
+      "RBAC model",
+      "Change history",
+      "Compliance export"
+    ]
+  }
+];
 
 const initialPocTasks = [
   ["deploy-agents", "Day 0–30: Foundation", "Deploy agents on ~500 mixed-vendor devices: Windows + macOS"],
@@ -299,6 +313,146 @@ function evidenceMultiplier(evidence) {
   return 0.60;
 }
 
+const confidenceMultiplier = {
+  High: 1.0,
+  Medium: 0.75,
+  Low: 0.45,
+  Unknown: 0.25
+};
+
+const evidenceMultiplier = {
+  Verified: 1.0,
+  Partial: 0.75,
+  Missing: 0.45,
+  Unknown: 0.25
+};
+function calculateAdjustedScores(categories) {
+  let hpRawScore = 0;
+  let lenovoRawScore = 0;
+  let hpAdjustedScore = 0;
+  let lenovoAdjustedScore = 0;
+  let maxPossibleScore = 0;
+
+  categories.forEach(category => {
+    const weight = category.weight;
+    const confidenceFactor = getConfidenceMultiplier(category.confidence);
+    const evidenceFactor = getEvidenceMultiplier(category.evidenceStatus);
+    const adjustmentFactor = confidenceFactor * evidenceFactor;
+
+    hpRawScore += category.hpScore * weight;
+    lenovoRawScore += category.lenovoScore * weight;
+
+    hpAdjustedScore += category.hpScore * weight * adjustmentFactor;
+    lenovoAdjustedScore += category.lenovoScore * weight * adjustmentFactor;
+
+    maxPossibleScore += 5 * weight;
+  });
+
+  return {
+    hpRawScore,
+    lenovoRawScore,
+    hpAdjustedScore,
+    lenovoAdjustedScore,
+    maxPossibleScore,
+    scoreGap: Math.abs(hpAdjustedScore - lenovoAdjustedScore)
+  };
+}
+function getMissingEvidence(categories) {
+  return categories
+    .filter(category => {
+      const hasNoLinks = !category.evidenceLinks || category.evidenceLinks.length === 0;
+      const weakConfidence = category.confidence === "Low" || category.confidence === "Unknown";
+      const weakEvidence = category.evidenceStatus === "Missing" || category.evidenceStatus === "Unknown";
+
+      return hasNoLinks || weakConfidence || weakEvidence;
+    })
+    .map(category => ({
+      category: category.name,
+      severity: category.weight >= 4 ? "Critical" : "Important",
+      confidence: category.confidence,
+      evidenceStatus: category.evidenceStatus,
+      needed: category.proofNeeded || [
+        "Official documentation",
+        "Admin console screenshot",
+        "Demo evidence",
+        "Contract language",
+        "PoC result"
+      ],
+      reason: "Current score is not fully evidence-backed."
+    }));
+}
+function getRiskFlags(categories, scoreGap) {
+  const risks = [];
+
+  if (scoreGap <= 2) {
+    risks.push({
+      severity: "High",
+      title: "Overall score gap is too narrow",
+      detail: `The adjusted score gap is only ${scoreGap.toFixed(1)} points. Treat this as a tie until PoC evidence breaks the deadlock.`,
+      owner: "Decision team"
+    });
+  }
+
+  categories.forEach(category => {
+    const hasNoEvidenceLinks = !category.evidenceLinks || category.evidenceLinks.length === 0;
+    const isHighWeight = category.weight >= 4;
+    const isLowConfidence = category.confidence === "Low" || category.confidence === "Unknown";
+    const isMissingEvidence = category.evidenceStatus === "Missing" || category.evidenceStatus === "Unknown";
+    const isTie = category.hpScore === category.lenovoScore;
+
+    if (isHighWeight && isLowConfidence) {
+      risks.push({
+        severity: "High",
+        title: `Low-confidence evidence in high-weight category: ${category.name}`,
+        detail: "This category has enough weight to change the final recommendation if evidence changes.",
+        owner: getCategoryLeader(category)
+      });
+    }
+
+    if (isHighWeight && isMissingEvidence) {
+      risks.push({
+        severity: "High",
+        title: `Missing evidence in high-weight category: ${category.name}`,
+        detail: "This score should not be treated as decision-grade until validated with documentation, demo proof, or PoC output.",
+        owner: getCategoryLeader(category)
+      });
+    }
+
+    if (hasNoEvidenceLinks && isHighWeight) {
+      risks.push({
+        severity: "High",
+        title: `No evidence links attached: ${category.name}`,
+        detail: "High-weight category has no supporting link. This creates audit risk and weakens executive defensibility.",
+        owner: getCategoryLeader(category)
+      });
+    }
+
+    if (isTie && category.weight >= 3) {
+      risks.push({
+        severity: "Medium",
+        title: `Tie in meaningful category: ${category.name}`,
+        detail: "This category should be converted into a PoC test case instead of staying as a static score tie.",
+        owner: "Both vendors"
+      });
+    }
+  });
+
+  return risks;
+}
+
+function getCategoryLeader(category) {
+  if (category.hpScore > category.lenovoScore) return "HP";
+  if (category.lenovoScore > category.hpScore) return "Lenovo";
+  return "Both vendors";
+}
+function getConfidenceMultiplier(confidence) {
+  return confidenceMultiplier[confidence] ?? confidenceMultiplier.Unknown;
+}
+
+function getEvidenceMultiplier(status) {
+  return evidenceMultiplier[status] ?? evidenceMultiplier.Unknown;
+}
+
 function rawWeightedScore(vendor) {
   const totalWeight = capabilities.reduce((sum, item) => sum + Number(item.weight), 0);
 
@@ -362,7 +516,95 @@ function riskFlags() {
           : "Low"
     }));
 }
+function getDecisionGate(scores, categories, missingEvidence, riskFlags) {
+  const hasCriticalMissingEvidence = missingEvidence.some(item => item.severity === "Critical");
+  const hasHighRisk = riskFlags.some(risk => risk.severity === "High");
+  const lowConfidenceHighWeight = categories.some(category =>
+    category.weight >= 4 &&
+    (category.confidence === "Low" || category.confidence === "Unknown")
+  );
 
+  if (hasCriticalMissingEvidence && scores.scoreGap <= 2) {
+    return {
+      status: "BLOCKED",
+      label: "Blocked by missing evidence",
+      message: "Critical proof is missing and the score gap is too narrow. Do not select a vendor until the missing evidence is validated."
+    };
+  }
+
+  if (scores.scoreGap <= 2 || lowConfidenceHighWeight) {
+    return {
+      status: "POC_REQUIRED",
+      label: "PoC required",
+      message: "The platforms are too close or key categories have low-confidence evidence. Run targeted validation before final selection."
+    };
+  }
+
+  if (hasHighRisk) {
+    return {
+      status: "EXEC_REVIEW",
+      label: "Executive review required",
+      message: "One or more high-risk areas may materially change the recommendation. Leadership review is required before vendor selection."
+    };
+  }
+
+  return {
+    status: "READY",
+    label: "Ready to select",
+    message: "Evidence quality is sufficient and the adjusted score gap is meaningful enough to support a recommendation."
+  };
+}
+function getSuggestedNextSteps(decisionGate, riskFlags, missingEvidence, categories) {
+  const steps = [];
+
+  if (decisionGate.status === "POC_REQUIRED" || decisionGate.status === "BLOCKED") {
+    steps.push({
+      priority: "P0",
+      title: "Run PoC tests for tied high-impact categories",
+      detail: "Convert Endpoint telemetry, AI recommendations, Automated remediation, Hardware refresh / lifecycle, and Security posture into measurable PoC test cases."
+    });
+  }
+
+  const criticalEvidence = missingEvidence.filter(item => item.severity === "Critical");
+
+  if (criticalEvidence.length > 0) {
+    steps.push({
+      priority: "P0",
+      title: "Collect critical missing evidence",
+      detail: `Validate ${criticalEvidence.map(item => item.category).join(", ")} with official docs, admin screenshots, API proof, demo recordings, or PoC output.`
+    });
+  }
+
+  const highRisks = riskFlags.filter(risk => risk.severity === "High");
+
+  if (highRisks.length > 0) {
+    steps.push({
+      priority: "P1",
+      title: "Resolve high-risk decision flags",
+      detail: "Focus on the risks that could flip the winner: narrow score gap, low-confidence GenAI claims, and multi-vendor support proof."
+    });
+  }
+
+  steps.push({
+    priority: "P1",
+    title: "Add evidence links to every high-weight category",
+    detail: "Every category with weight 4 or 5 should have at least one source link before it counts as decision-grade."
+  });
+
+  steps.push({
+    priority: "P2",
+    title: "Generate winner-flip sensitivity",
+    detail: "Show which 1-2 category changes would flip the recommendation. This tells leadership where the real battlefield is."
+  });
+
+  steps.push({
+    priority: "P2",
+    title: "Generate executive report after gate improves",
+    detail: "Only generate the final executive report when the decision gate moves from PoC Required or Blocked to Ready to Select."
+  });
+
+  return steps;
+}
 function decisionGate() {
   const highWeightClaimed = capabilities.filter(
     (item) => Number(item.weight) >= 8 && item.evidence === "Claimed"
@@ -397,7 +639,55 @@ function decisionGate() {
     blockers: []
   };
 }
+function getWinnerFlipSensitivity(categories, scores) {
+  const currentWinner =
+    scores.hpAdjustedScore > scores.lenovoAdjustedScore
+      ? "HP"
+      : scores.lenovoAdjustedScore > scores.hpAdjustedScore
+        ? "Lenovo"
+        : "Tie";
 
+  const flipCandidates = [];
+
+  categories.forEach(category => {
+    const confidenceFactor = getConfidenceMultiplier(category.confidence);
+    const evidenceFactor = getEvidenceMultiplier(category.evidenceStatus);
+    const adjustmentFactor = confidenceFactor * evidenceFactor;
+
+    const onePointImpact = category.weight * adjustmentFactor;
+
+    if (onePointImpact >= scores.scoreGap) {
+      flipCandidates.push({
+        category: category.name,
+        onePointImpact: Number(onePointImpact.toFixed(2)),
+        reason: "A one-point score movement in this category could change or erase the recommendation."
+      });
+    }
+  });
+
+  return {
+    currentWinner,
+    scoreGap: Number(scores.scoreGap.toFixed(2)),
+    flipCandidates
+  };
+}
+function buildDecisionModel(categories) {
+  const scores = calculateAdjustedScores(categories);
+  const missingEvidence = getMissingEvidence(categories);
+  const riskFlags = getRiskFlags(categories, scores.scoreGap);
+  const decisionGate = getDecisionGate(scores, categories, missingEvidence, riskFlags);
+  const suggestedNextSteps = getSuggestedNextSteps(decisionGate, riskFlags, missingEvidence, categories);
+  const winnerFlipSensitivity = getWinnerFlipSensitivity(categories, scores);
+
+  return {
+    scores,
+    missingEvidence,
+    riskFlags,
+    decisionGate,
+    suggestedNextSteps,
+    winnerFlipSensitivity
+  };
+}
 function render() {
   save();
   renderDashboard();
