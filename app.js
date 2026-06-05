@@ -1,12 +1,15 @@
-const categories = [
+const initialCapabilities = [
   {
+    id: "endpoint-telemetry",
     name: "Endpoint telemetry",
-    weight: 4,
+    group: "Core DEX",
+    weight: 8,
     hpScore: 4,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Telemetry data source documentation",
       "Admin console screenshots",
@@ -15,13 +18,16 @@ const categories = [
     ]
   },
   {
+    id: "ai-recommendations",
     name: "AI recommendations",
-    weight: 4,
+    group: "AI / Automation",
+    weight: 8,
     hpScore: 4,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Recommendation logic explanation",
       "Real workflow demo",
@@ -30,13 +36,16 @@ const categories = [
     ]
   },
   {
+    id: "automated-remediation",
     name: "Automated remediation",
-    weight: 4,
+    group: "AI / Automation",
+    weight: 8,
     hpScore: 4,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Before/after remediation logs",
       "Rollback behavior",
@@ -45,13 +54,16 @@ const categories = [
     ]
   },
   {
+    id: "lifecycle",
     name: "Hardware refresh / lifecycle",
-    weight: 3,
+    group: "Lifecycle",
+    weight: 6,
     hpScore: 4,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Warranty/lifecycle integration proof",
       "Battery health data",
@@ -60,13 +72,16 @@ const categories = [
     ]
   },
   {
+    id: "security",
     name: "Security posture",
-    weight: 4,
+    group: "Security",
+    weight: 8,
     hpScore: 4,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Security data source",
       "Compliance mapping",
@@ -75,13 +90,16 @@ const categories = [
     ]
   },
   {
+    id: "multi-vendor",
     name: "Multi-vendor / OEM-agnostic support",
-    weight: 5,
+    group: "Fleet Coverage",
+    weight: 10,
     hpScore: 5,
     lenovoScore: 3,
     confidence: "Low",
-    evidenceStatus: "Missing",
-    evidenceLinks: [],
+    evidence: "Claimed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Supported OEM list",
       "API documentation",
@@ -90,13 +108,16 @@ const categories = [
     ]
   },
   {
+    id: "employee-sentiment",
     name: "Employee sentiment",
-    weight: 4,
+    group: "Experience",
+    weight: 8,
     hpScore: 5,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Survey data model",
       "Sentiment scoring method",
@@ -105,13 +126,16 @@ const categories = [
     ]
   },
   {
+    id: "microsoft",
     name: "Microsoft ecosystem integration",
-    weight: 4,
+    group: "Integration",
+    weight: 8,
     hpScore: 5,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Intune integration proof",
       "Entra ID / RBAC proof",
@@ -120,13 +144,16 @@ const categories = [
     ]
   },
   {
+    id: "reporting",
     name: "Reporting / BI",
-    weight: 2,
+    group: "Analytics",
+    weight: 4,
     hpScore: 5,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Export format",
       "BI connector proof",
@@ -135,13 +162,16 @@ const categories = [
     ]
   },
   {
+    id: "genai-assistant",
     name: "GenAI assistant",
-    weight: 4,
+    group: "AI / Automation",
+    weight: 8,
     hpScore: 3,
     lenovoScore: 5,
     confidence: "Low",
-    evidenceStatus: "Missing",
-    evidenceLinks: [],
+    evidence: "Claimed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Real workflow demo",
       "Prompt/action boundary",
@@ -151,13 +181,16 @@ const categories = [
     ]
   },
   {
+    id: "servicenow",
     name: "ServiceNow integration",
-    weight: 5,
+    group: "Integration",
+    weight: 10,
     hpScore: 3,
     lenovoScore: 5,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Ticket creation demo",
       "Ticket update demo",
@@ -167,13 +200,16 @@ const categories = [
     ]
   },
   {
+    id: "governance",
     name: "Governance / auditability",
-    weight: 3,
+    group: "Governance",
+    weight: 6,
     hpScore: 3,
     lenovoScore: 4,
     confidence: "Medium",
-    evidenceStatus: "Partial",
-    evidenceLinks: [],
+    evidence: "Demoed",
+    evidenceLinks: "",
+    notes: "",
     proofNeeded: [
       "Admin audit trail",
       "RBAC model",
@@ -278,8 +314,8 @@ const proofChecklist = {
   ]
 };
 
-let capabilities = load("dex-capabilities-v2", initialCapabilities);
-let pocTasks = load("dex-poc-tasks-v2", initialPocTasks);
+let capabilities = load("dex-capabilities-v3", initialCapabilities);
+let pocTasks = load("dex-poc-tasks-v3", initialPocTasks);
 
 let barChart;
 let radarChart;
@@ -297,192 +333,131 @@ document.querySelectorAll(".tab").forEach((button) => {
 });
 
 function load(key, fallback) {
-  const saved = localStorage.getItem(key);
-  return saved ? JSON.parse(saved) : structuredClone(fallback);
+  try {
+    const saved = localStorage.getItem(key);
+    return saved ? normalizeCapabilities(JSON.parse(saved)) : structuredClone(fallback);
+  } catch {
+    return structuredClone(fallback);
+  }
+}
+
+function normalizeCapabilities(data) {
+  if (!Array.isArray(data)) return structuredClone(initialCapabilities);
+
+  return data.map((item) => {
+    const fallback = initialCapabilities.find((x) => x.id === item.id) || {};
+
+    return {
+      ...fallback,
+      ...item,
+      evidenceLinks: Array.isArray(item.evidenceLinks)
+        ? item.evidenceLinks.join(", ")
+        : item.evidenceLinks || "",
+      notes: item.notes || "",
+      proofNeeded: item.proofNeeded || fallback.proofNeeded || []
+    };
+  });
 }
 
 function save() {
-  localStorage.setItem("dex-capabilities-v2", JSON.stringify(capabilities));
-  localStorage.setItem("dex-poc-tasks-v2", JSON.stringify(pocTasks));
+  localStorage.setItem("dex-capabilities-v3", JSON.stringify(capabilities));
+  localStorage.setItem("dex-poc-tasks-v3", JSON.stringify(pocTasks));
 }
 
-function evidenceMultiplier(evidence) {
-  if (evidence === "PoC Validated") return 1.0;
-  if (evidence === "Documented") return 0.85;
-  if (evidence === "Demoed") return 0.75;
-  return 0.60;
+function resetData() {
+  localStorage.removeItem("dex-capabilities-v2");
+  localStorage.removeItem("dex-poc-tasks-v2");
+  localStorage.removeItem("dex-capabilities-v3");
+  localStorage.removeItem("dex-poc-tasks-v3");
+
+  capabilities = structuredClone(initialCapabilities);
+  pocTasks = structuredClone(initialPocTasks);
+
+  save();
+  render();
 }
 
-const confidenceMultiplier = {
+const CONFIDENCE_MULTIPLIER = {
   High: 1.0,
   Medium: 0.75,
   Low: 0.45,
   Unknown: 0.25
 };
 
-const evidenceMultiplier = {
-  Verified: 1.0,
-  Partial: 0.75,
+const EVIDENCE_MULTIPLIER = {
+  "PoC Validated": 1.0,
+  Documented: 0.85,
+  Demoed: 0.75,
+  Claimed: 0.6,
   Missing: 0.45,
   Unknown: 0.25
 };
-function calculateAdjustedScores(categories) {
-  let hpRawScore = 0;
-  let lenovoRawScore = 0;
-  let hpAdjustedScore = 0;
-  let lenovoAdjustedScore = 0;
-  let maxPossibleScore = 0;
 
-  categories.forEach(category => {
-    const weight = category.weight;
-    const confidenceFactor = getConfidenceMultiplier(category.confidence);
-    const evidenceFactor = getEvidenceMultiplier(category.evidenceStatus);
-    const adjustmentFactor = confidenceFactor * evidenceFactor;
-
-    hpRawScore += category.hpScore * weight;
-    lenovoRawScore += category.lenovoScore * weight;
-
-    hpAdjustedScore += category.hpScore * weight * adjustmentFactor;
-    lenovoAdjustedScore += category.lenovoScore * weight * adjustmentFactor;
-
-    maxPossibleScore += 5 * weight;
-  });
-
-  return {
-    hpRawScore,
-    lenovoRawScore,
-    hpAdjustedScore,
-    lenovoAdjustedScore,
-    maxPossibleScore,
-    scoreGap: Math.abs(hpAdjustedScore - lenovoAdjustedScore)
-  };
-}
-function getMissingEvidence(categories) {
-  return categories
-    .filter(category => {
-      const hasNoLinks = !category.evidenceLinks || category.evidenceLinks.length === 0;
-      const weakConfidence = category.confidence === "Low" || category.confidence === "Unknown";
-      const weakEvidence = category.evidenceStatus === "Missing" || category.evidenceStatus === "Unknown";
-
-      return hasNoLinks || weakConfidence || weakEvidence;
-    })
-    .map(category => ({
-      category: category.name,
-      severity: category.weight >= 4 ? "Critical" : "Important",
-      confidence: category.confidence,
-      evidenceStatus: category.evidenceStatus,
-      needed: category.proofNeeded || [
-        "Official documentation",
-        "Admin console screenshot",
-        "Demo evidence",
-        "Contract language",
-        "PoC result"
-      ],
-      reason: "Current score is not fully evidence-backed."
-    }));
-}
-function getRiskFlags(categories, scoreGap) {
-  const risks = [];
-
-  if (scoreGap <= 2) {
-    risks.push({
-      severity: "High",
-      title: "Overall score gap is too narrow",
-      detail: `The adjusted score gap is only ${scoreGap.toFixed(1)} points. Treat this as a tie until PoC evidence breaks the deadlock.`,
-      owner: "Decision team"
-    });
-  }
-
-  categories.forEach(category => {
-    const hasNoEvidenceLinks = !category.evidenceLinks || category.evidenceLinks.length === 0;
-    const isHighWeight = category.weight >= 4;
-    const isLowConfidence = category.confidence === "Low" || category.confidence === "Unknown";
-    const isMissingEvidence = category.evidenceStatus === "Missing" || category.evidenceStatus === "Unknown";
-    const isTie = category.hpScore === category.lenovoScore;
-
-    if (isHighWeight && isLowConfidence) {
-      risks.push({
-        severity: "High",
-        title: `Low-confidence evidence in high-weight category: ${category.name}`,
-        detail: "This category has enough weight to change the final recommendation if evidence changes.",
-        owner: getCategoryLeader(category)
-      });
-    }
-
-    if (isHighWeight && isMissingEvidence) {
-      risks.push({
-        severity: "High",
-        title: `Missing evidence in high-weight category: ${category.name}`,
-        detail: "This score should not be treated as decision-grade until validated with documentation, demo proof, or PoC output.",
-        owner: getCategoryLeader(category)
-      });
-    }
-
-    if (hasNoEvidenceLinks && isHighWeight) {
-      risks.push({
-        severity: "High",
-        title: `No evidence links attached: ${category.name}`,
-        detail: "High-weight category has no supporting link. This creates audit risk and weakens executive defensibility.",
-        owner: getCategoryLeader(category)
-      });
-    }
-
-    if (isTie && category.weight >= 3) {
-      risks.push({
-        severity: "Medium",
-        title: `Tie in meaningful category: ${category.name}`,
-        detail: "This category should be converted into a PoC test case instead of staying as a static score tie.",
-        owner: "Both vendors"
-      });
-    }
-  });
-
-  return risks;
+function confidenceFactor(confidence) {
+  return CONFIDENCE_MULTIPLIER[confidence] ?? CONFIDENCE_MULTIPLIER.Unknown;
 }
 
-function getCategoryLeader(category) {
-  if (category.hpScore > category.lenovoScore) return "HP";
-  if (category.lenovoScore > category.hpScore) return "Lenovo";
-  return "Both vendors";
-}
-function getConfidenceMultiplier(confidence) {
-  return confidenceMultiplier[confidence] ?? confidenceMultiplier.Unknown;
+function evidenceFactor(evidence) {
+  return EVIDENCE_MULTIPLIER[evidence] ?? EVIDENCE_MULTIPLIER.Unknown;
 }
 
-function getEvidenceMultiplier(status) {
-  return evidenceMultiplier[status] ?? evidenceMultiplier.Unknown;
+function totalWeight() {
+  return capabilities.reduce((sum, item) => sum + Number(item.weight || 0), 0);
 }
 
 function rawWeightedScore(vendor) {
-  const totalWeight = capabilities.reduce((sum, item) => sum + Number(item.weight), 0);
+  const weightTotal = totalWeight();
 
   const weighted = capabilities.reduce((sum, item) => {
     const score = vendor === "hp" ? Number(item.hpScore) : Number(item.lenovoScore);
     return sum + score * Number(item.weight);
   }, 0);
 
-  return totalWeight === 0 ? 0 : (weighted / (totalWeight * 5)) * 100;
+  return weightTotal === 0 ? 0 : (weighted / (weightTotal * 5)) * 100;
 }
 
 function weightedScore(vendor) {
-  const totalWeight = capabilities.reduce((sum, item) => sum + Number(item.weight), 0);
+  const weightTotal = totalWeight();
 
   const weighted = capabilities.reduce((sum, item) => {
     const score = vendor === "hp" ? Number(item.hpScore) : Number(item.lenovoScore);
-    const multiplier = evidenceMultiplier(item.evidence);
+    const multiplier = confidenceFactor(item.confidence) * evidenceFactor(item.evidence);
 
     return sum + score * Number(item.weight) * multiplier;
   }, 0);
 
-  return totalWeight === 0 ? 0 : (weighted / (totalWeight * 5)) * 100;
+  return weightTotal === 0 ? 0 : (weighted / (weightTotal * 5)) * 100;
 }
 
 function averageScore(vendor) {
+  if (!capabilities.length) return 0;
+
   const total = capabilities.reduce((sum, item) => {
     return sum + Number(vendor === "hp" ? item.hpScore : item.lenovoScore);
   }, 0);
 
   return total / capabilities.length;
+}
+
+function getDecisionScores() {
+  const hpRaw = rawWeightedScore("hp");
+  const lenovoRaw = rawWeightedScore("lenovo");
+  const hpAdjusted = weightedScore("hp");
+  const lenovoAdjusted = weightedScore("lenovo");
+
+  return {
+    hpRaw,
+    lenovoRaw,
+    hpAdjusted,
+    lenovoAdjusted,
+    scoreGap: Math.abs(hpAdjusted - lenovoAdjusted),
+    currentWinner:
+      hpAdjusted > lenovoAdjusted
+        ? "HP WXP"
+        : lenovoAdjusted > hpAdjusted
+          ? "Lenovo xIQ"
+          : "Tie"
+  };
 }
 
 function leadText(item) {
@@ -493,42 +468,123 @@ function leadText(item) {
 }
 
 function getWinner() {
-  const hp = weightedScore("hp");
-  const lenovo = weightedScore("lenovo");
-  const gap = Math.abs(hp - lenovo);
+  const scores = getDecisionScores();
 
-  if (gap < 2) return "Too close to call";
-  return hp > lenovo ? "HP WXP" : "Lenovo xIQ";
+  if (scores.scoreGap < 2) return "Too close to call";
+  return scores.currentWinner;
 }
 
-function riskFlags() {
+function getCategoryLeader(item) {
+  if (Number(item.hpScore) > Number(item.lenovoScore)) return "HP";
+  if (Number(item.lenovoScore) > Number(item.hpScore)) return "Lenovo";
+  return "Both vendors";
+}
+
+function hasEvidenceLink(item) {
+  return String(item.evidenceLinks || "").trim().length > 0;
+}
+
+function isHighWeight(item) {
+  return Number(item.weight) >= 8;
+}
+
+function getMissingEvidence() {
   return capabilities
-    .filter((item) => Number(item.weight) >= 8 && item.evidence !== "PoC Validated")
+    .filter((item) => {
+      const noLinks = !hasEvidenceLink(item);
+      const weakConfidence = item.confidence === "Low" || item.confidence === "Unknown";
+      const weakEvidence = item.evidence === "Claimed" || item.evidence === "Missing" || item.evidence === "Unknown";
+
+      return noLinks || weakConfidence || weakEvidence;
+    })
     .map((item) => ({
-      name: item.name,
-      weight: item.weight,
+      id: item.id,
+      category: item.name,
+      severity: isHighWeight(item) ? "Critical" : "Important",
+      confidence: item.confidence,
       evidence: item.evidence,
-      risk:
-        item.evidence === "Claimed"
-          ? "High"
-          : item.evidence === "Demoed"
-          ? "Medium"
-          : "Low"
+      needed: item.proofNeeded || proofChecklist[item.id] || ["Provide documentation, demo proof, and PoC result."],
+      reason: "Current score is not fully evidence-backed."
     }));
 }
-function getDecisionGate(scores, categories, missingEvidence, riskFlags) {
-  const hasCriticalMissingEvidence = missingEvidence.some(item => item.severity === "Critical");
-  const hasHighRisk = riskFlags.some(risk => risk.severity === "High");
-  const lowConfidenceHighWeight = categories.some(category =>
-    category.weight >= 4 &&
-    (category.confidence === "Low" || category.confidence === "Unknown")
-  );
+
+function getRiskFlags() {
+  const scores = getDecisionScores();
+  const risks = [];
+
+  if (scores.scoreGap <= 2) {
+    risks.push({
+      severity: "High",
+      title: "Overall score gap is too narrow",
+      detail: `The adjusted score gap is only ${scores.scoreGap.toFixed(1)} points. Treat this as a tie until PoC evidence breaks the deadlock.`,
+      owner: "Decision team"
+    });
+  }
+
+  capabilities.forEach((item) => {
+    const highWeight = isHighWeight(item);
+    const lowConfidence = item.confidence === "Low" || item.confidence === "Unknown";
+    const weakEvidence = item.evidence === "Claimed" || item.evidence === "Missing" || item.evidence === "Unknown";
+    const tied = Number(item.hpScore) === Number(item.lenovoScore);
+    const noLinks = !hasEvidenceLink(item);
+
+    if (highWeight && lowConfidence) {
+      risks.push({
+        severity: "High",
+        title: `Low-confidence evidence in high-weight category: ${item.name}`,
+        detail: "This category has enough weight to change the final recommendation if evidence changes.",
+        owner: getCategoryLeader(item)
+      });
+    }
+
+    if (highWeight && weakEvidence) {
+      risks.push({
+        severity: "High",
+        title: `Weak evidence in high-weight category: ${item.name}`,
+        detail: "This score should not be treated as decision-grade until validated with documentation, demo proof, or PoC output.",
+        owner: getCategoryLeader(item)
+      });
+    }
+
+    if (highWeight && noLinks) {
+      risks.push({
+        severity: "High",
+        title: `No evidence links attached: ${item.name}`,
+        detail: "High-weight category has no supporting link. This creates audit risk and weakens executive defensibility.",
+        owner: getCategoryLeader(item)
+      });
+    }
+
+    if (tied && Number(item.weight) >= 6) {
+      risks.push({
+        severity: "Medium",
+        title: `Tie in meaningful category: ${item.name}`,
+        detail: "This category should be converted into a PoC test case instead of staying as a static score tie.",
+        owner: "Both vendors"
+      });
+    }
+  });
+
+  return risks;
+}
+
+function getDecisionGate() {
+  const scores = getDecisionScores();
+  const missingEvidence = getMissingEvidence();
+  const riskFlags = getRiskFlags();
+
+  const hasCriticalMissingEvidence = missingEvidence.some((item) => item.severity === "Critical");
+  const hasHighRisk = riskFlags.some((risk) => risk.severity === "High");
+  const lowConfidenceHighWeight = capabilities.some((item) => {
+    return isHighWeight(item) && (item.confidence === "Low" || item.confidence === "Unknown");
+  });
 
   if (hasCriticalMissingEvidence && scores.scoreGap <= 2) {
     return {
       status: "BLOCKED",
       label: "Blocked by missing evidence",
-      message: "Critical proof is missing and the score gap is too narrow. Do not select a vendor until the missing evidence is validated."
+      cssClass: "status-no-go",
+      message: "Critical proof is missing and the score gap is too narrow. Do not select a vendor until missing evidence is validated."
     };
   }
 
@@ -536,6 +592,7 @@ function getDecisionGate(scores, categories, missingEvidence, riskFlags) {
     return {
       status: "POC_REQUIRED",
       label: "PoC required",
+      cssClass: "status-conditional",
       message: "The platforms are too close or key categories have low-confidence evidence. Run targeted validation before final selection."
     };
   }
@@ -544,6 +601,7 @@ function getDecisionGate(scores, categories, missingEvidence, riskFlags) {
     return {
       status: "EXEC_REVIEW",
       label: "Executive review required",
+      cssClass: "status-conditional",
       message: "One or more high-risk areas may materially change the recommendation. Leadership review is required before vendor selection."
     };
   }
@@ -551,13 +609,21 @@ function getDecisionGate(scores, categories, missingEvidence, riskFlags) {
   return {
     status: "READY",
     label: "Ready to select",
+    cssClass: "status-ready",
     message: "Evidence quality is sufficient and the adjusted score gap is meaningful enough to support a recommendation."
   };
 }
-function getSuggestedNextSteps(decisionGate, riskFlags, missingEvidence, categories) {
+
+function getSuggestedNextSteps() {
+  const gate = getDecisionGate();
+  const risks = getRiskFlags();
+  const missing = getMissingEvidence();
+  const criticalEvidence = missing.filter((item) => item.severity === "Critical");
+  const highRisks = risks.filter((risk) => risk.severity === "High");
+
   const steps = [];
 
-  if (decisionGate.status === "POC_REQUIRED" || decisionGate.status === "BLOCKED") {
+  if (gate.status === "POC_REQUIRED" || gate.status === "BLOCKED") {
     steps.push({
       priority: "P0",
       title: "Run PoC tests for tied high-impact categories",
@@ -565,129 +631,68 @@ function getSuggestedNextSteps(decisionGate, riskFlags, missingEvidence, categor
     });
   }
 
-  const criticalEvidence = missingEvidence.filter(item => item.severity === "Critical");
-
   if (criticalEvidence.length > 0) {
     steps.push({
       priority: "P0",
       title: "Collect critical missing evidence",
-      detail: `Validate ${criticalEvidence.map(item => item.category).join(", ")} with official docs, admin screenshots, API proof, demo recordings, or PoC output.`
+      detail: `Validate ${criticalEvidence.map((item) => item.category).join(", ")} with official docs, admin screenshots, API proof, demo recordings, or PoC output.`
     });
   }
-
-  const highRisks = riskFlags.filter(risk => risk.severity === "High");
 
   if (highRisks.length > 0) {
     steps.push({
       priority: "P1",
       title: "Resolve high-risk decision flags",
-      detail: "Focus on the risks that could flip the winner: narrow score gap, low-confidence GenAI claims, and multi-vendor support proof."
+      detail: "Focus on the risks that could flip the winner: narrow score gap, low-confidence GenAI claims, multi-vendor support proof, and ServiceNow integration proof."
     });
   }
 
   steps.push({
     priority: "P1",
     title: "Add evidence links to every high-weight category",
-    detail: "Every category with weight 4 or 5 should have at least one source link before it counts as decision-grade."
+    detail: "Every category with weight 8 or higher should have at least one evidence link before it counts as decision-grade."
   });
 
   steps.push({
     priority: "P2",
-    title: "Generate winner-flip sensitivity",
-    detail: "Show which 1-2 category changes would flip the recommendation. This tells leadership where the real battlefield is."
+    title: "Update confidence after PoC",
+    detail: "Move confidence from Low or Medium to High only when the vendor proves the workflow with real devices, real admin controls, and real output."
   });
 
   steps.push({
     priority: "P2",
     title: "Generate executive report after gate improves",
-    detail: "Only generate the final executive report when the decision gate moves from PoC Required or Blocked to Ready to Select."
+    detail: "Use the executive report after the gate moves from Blocked or PoC Required to Ready or Executive Review."
   });
 
   return steps;
 }
-function decisionGate() {
-  const highWeightClaimed = capabilities.filter(
-    (item) => Number(item.weight) >= 8 && item.evidence === "Claimed"
-  );
 
-  const highWeightUnvalidated = capabilities.filter(
-    (item) => Number(item.weight) >= 8 && item.evidence !== "PoC Validated"
-  );
+function getWinnerFlipSensitivity() {
+  const scores = getDecisionScores();
 
-  if (highWeightClaimed.length > 0) {
-    return {
-      status: "No-go for final decision",
-      cssClass: "status-no-go",
-      reason: "High-weight capabilities are still only claimed.",
-      blockers: highWeightClaimed.map((item) => item.name)
-    };
-  }
+  const flipCandidates = capabilities
+    .map((item) => {
+      const onePointImpact = (Number(item.weight) * confidenceFactor(item.confidence) * evidenceFactor(item.evidence)) / (totalWeight() * 5) * 100;
 
-  if (highWeightUnvalidated.length > 0) {
-    return {
-      status: "Conditional go",
-      cssClass: "status-conditional",
-      reason: "Some high-weight capabilities still need PoC validation.",
-      blockers: highWeightUnvalidated.map((item) => item.name)
-    };
-  }
-
-  return {
-    status: "Ready for final decision",
-    cssClass: "status-ready",
-    reason: "High-weight capabilities have PoC validation.",
-    blockers: []
-  };
-}
-function getWinnerFlipSensitivity(categories, scores) {
-  const currentWinner =
-    scores.hpAdjustedScore > scores.lenovoAdjustedScore
-      ? "HP"
-      : scores.lenovoAdjustedScore > scores.hpAdjustedScore
-        ? "Lenovo"
-        : "Tie";
-
-  const flipCandidates = [];
-
-  categories.forEach(category => {
-    const confidenceFactor = getConfidenceMultiplier(category.confidence);
-    const evidenceFactor = getEvidenceMultiplier(category.evidenceStatus);
-    const adjustmentFactor = confidenceFactor * evidenceFactor;
-
-    const onePointImpact = category.weight * adjustmentFactor;
-
-    if (onePointImpact >= scores.scoreGap) {
-      flipCandidates.push({
-        category: category.name,
+      return {
+        category: item.name,
         onePointImpact: Number(onePointImpact.toFixed(2)),
+        leader: getCategoryLeader(item),
         reason: "A one-point score movement in this category could change or erase the recommendation."
-      });
-    }
-  });
+      };
+    })
+    .filter((item) => item.onePointImpact >= scores.scoreGap * 0.5)
+    .sort((a, b) => b.onePointImpact - a.onePointImpact)
+    .slice(0, 8);
 
   return {
-    currentWinner,
+    currentWinner: getWinner(),
     scoreGap: Number(scores.scoreGap.toFixed(2)),
     flipCandidates
   };
 }
-function buildDecisionModel(categories) {
-  const scores = calculateAdjustedScores(categories);
-  const missingEvidence = getMissingEvidence(categories);
-  const riskFlags = getRiskFlags(categories, scores.scoreGap);
-  const decisionGate = getDecisionGate(scores, categories, missingEvidence, riskFlags);
-  const suggestedNextSteps = getSuggestedNextSteps(decisionGate, riskFlags, missingEvidence, categories);
-  const winnerFlipSensitivity = getWinnerFlipSensitivity(categories, scores);
 
-  return {
-    scores,
-    missingEvidence,
-    riskFlags,
-    decisionGate,
-    suggestedNextSteps,
-    winnerFlipSensitivity
-  };
-}
 function render() {
   save();
   renderDashboard();
@@ -699,31 +704,24 @@ function render() {
 }
 
 function renderDashboard() {
-  const hpRaw = rawWeightedScore("hp");
-  const lenovoRaw = rawWeightedScore("lenovo");
-  const hpAdjusted = weightedScore("hp");
-  const lenovoAdjusted = weightedScore("lenovo");
+  const scores = getDecisionScores();
   const winner = getWinner();
 
-  document.getElementById("hpScore").textContent = hpAdjusted.toFixed(1);
-  document.getElementById("lenovoScore").textContent = lenovoAdjusted.toFixed(1);
+  setText("hpScore", scores.hpAdjusted.toFixed(1));
+  setText("lenovoScore", scores.lenovoAdjusted.toFixed(1));
 
-  document.getElementById("hpAverage").textContent =
-    `${hpRaw.toFixed(0)}% raw weighted, average score ${averageScore("hp").toFixed(2)} / 5`;
+  setText("hpAverage", `${scores.hpRaw.toFixed(0)}% raw weighted, average score ${averageScore("hp").toFixed(2)} / 5`);
+  setText("lenovoAverage", `${scores.lenovoRaw.toFixed(0)}% raw weighted, average score ${averageScore("lenovo").toFixed(2)} / 5`);
 
-  document.getElementById("lenovoAverage").textContent =
-    `${lenovoRaw.toFixed(0)}% raw weighted, average score ${averageScore("lenovo").toFixed(2)} / 5`;
+  setText("hpAdjusted", `Evidence-adjusted score: ${scores.hpAdjusted.toFixed(1)}`);
+  setText("lenovoAdjusted", `Evidence-adjusted score: ${scores.lenovoAdjusted.toFixed(1)}`);
 
-  document.getElementById("hpAdjusted").textContent =
-    `Evidence-adjusted score: ${hpAdjusted.toFixed(1)}`;
-
-  document.getElementById("lenovoAdjusted").textContent =
-    `Evidence-adjusted score: ${lenovoAdjusted.toFixed(1)}`;
-
-  document.getElementById("hpBadge").classList.toggle("hidden", winner !== "HP WXP");
-  document.getElementById("lenovoBadge").classList.toggle("hidden", winner !== "Lenovo xIQ");
+  toggleHidden("hpBadge", winner !== "HP WXP");
+  toggleHidden("lenovoBadge", winner !== "Lenovo xIQ");
 
   const tbody = document.getElementById("scoreTable");
+  if (!tbody) return;
+
   tbody.innerHTML = "";
 
   capabilities.forEach((item) => {
@@ -731,8 +729,8 @@ function renderDashboard() {
 
     tr.innerHTML = `
       <td>
-        <div class="cap-name">${item.name}</div>
-        <div class="cap-group">${item.group}</div>
+        <div class="cap-name">${escapeHtml(item.name)}</div>
+        <div class="cap-group">${escapeHtml(item.group)}</div>
       </td>
 
       <td>${scoreSelect(item.id, "hpScore", item.hpScore)}</td>
@@ -751,14 +749,14 @@ function renderDashboard() {
 
       <td>
         <select onchange="updateCapability('${item.id}', 'confidence', this.value)">
-          ${["Low", "Medium", "High"].map((v) => `<option ${item.confidence === v ? "selected" : ""}>${v}</option>`).join("")}
+          ${["Low", "Medium", "High"].map((v) => `<option value="${v}" ${item.confidence === v ? "selected" : ""}>${v}</option>`).join("")}
         </select>
       </td>
 
       <td>
         <select onchange="updateCapability('${item.id}', 'evidence', this.value)">
           ${["Claimed", "Demoed", "Documented", "PoC Validated"]
-            .map((v) => `<option ${item.evidence === v ? "selected" : ""}>${v}</option>`)
+            .map((v) => `<option value="${v}" ${item.evidence === v ? "selected" : ""}>${v}</option>`)
             .join("")}
         </select>
       </td>
@@ -768,7 +766,7 @@ function renderDashboard() {
       </td>
 
       <td>
-        <input type="text" value="${escapeHtml(item.notes)}" onchange="updateCapability('${item.id}', 'notes', this.value)" />
+        <input type="text" value="${escapeHtml(item.notes || "")}" onchange="updateCapability('${item.id}', 'notes', this.value)" />
       </td>
     `;
 
@@ -798,7 +796,7 @@ function renderCharts() {
   const barCtx = document.getElementById("barChart");
   const radarCtx = document.getElementById("radarChart");
 
-  if (!barCtx || !radarCtx) return;
+  if (!barCtx || !radarCtx || typeof Chart === "undefined") return;
 
   if (barChart) barChart.destroy();
   if (radarChart) radarChart.destroy();
@@ -851,6 +849,8 @@ function renderCharts() {
   });
 
   const heatmap = document.getElementById("heatmap");
+  if (!heatmap) return;
+
   heatmap.innerHTML = "";
 
   capabilities.forEach((item) => {
@@ -858,7 +858,7 @@ function renderCharts() {
     row.className = "heat-row";
 
     row.innerHTML = `
-      <div><strong>${item.name}</strong></div>
+      <div><strong>${escapeHtml(item.name)}</strong></div>
       <div class="heat-cell" style="background: rgba(2,132,199,${0.25 + item.hpScore * 0.13})">HP: ${item.hpScore}</div>
       <div class="heat-cell" style="background: rgba(220,38,38,${0.25 + item.lenovoScore * 0.13})">Lenovo: ${item.lenovoScore}</div>
     `;
@@ -868,86 +868,183 @@ function renderCharts() {
 }
 
 function renderInsights() {
-  const hp = weightedScore("hp");
-  const lenovo = weightedScore("lenovo");
-  const hpRaw = rawWeightedScore("hp");
-  const lenovoRaw = rawWeightedScore("lenovo");
+  const scores = getDecisionScores();
   const winner = getWinner();
 
   const winnerText = document.getElementById("winnerText");
-  const gap = Math.abs(hp - lenovo).toFixed(1);
+  if (winnerText) {
+    winnerText.innerHTML =
+      winner === "Too close to call"
+        ? `<strong>Winner: Too close to call.</strong> The two platforms are within ${scores.scoreGap.toFixed(1)} evidence-adjusted points. Let PoC validation break the deadlock.`
+        : `<strong>Winner: ${winner}.</strong> ${winner} currently leads based on evidence-adjusted enterprise priorities. Raw score was HP ${scores.hpRaw.toFixed(1)} vs Lenovo ${scores.lenovoRaw.toFixed(1)}.`;
+  }
 
-  winnerText.innerHTML =
-    winner === "Too close to call"
-      ? `<strong>Winner: Too close to call.</strong> The two platforms are within ${gap} evidence-adjusted points. Let PoC validation break the deadlock.`
-      : `<strong>Winner: ${winner}.</strong> ${winner} currently leads based on evidence-adjusted enterprise priorities. Raw score was HP ${hpRaw.toFixed(1)} vs Lenovo ${lenovoRaw.toFixed(1)}.`;
-
-  const gate = decisionGate();
-
-  document.getElementById("decisionGate").innerHTML = `
-    <span class="${gate.cssClass}">${gate.status}</span><br />
-    <span class="muted">${gate.reason}</span>
-    ${
-      gate.blockers.length
-        ? `<div class="line-item"><strong>Blockers:</strong> ${gate.blockers.join(", ")}</div>`
-        : ""
-    }
-  `;
-
-  const risks = riskFlags();
-
-  document.getElementById("riskFlags").innerHTML = risks.length
-    ? risks
-        .map(
-          (item) => `
-            <div class="line-item">
-              <span class="badge ${item.risk === "High" ? "red" : item.risk === "Medium" ? "gray" : "blue"}">${item.risk}</span>
-              <strong>${item.name}</strong>
-              <span class="muted">weight ${item.weight}, evidence ${item.evidence}</span>
-            </div>
-          `
-        )
-        .join("")
-    : `<div class="line-item"><span class="badge green">Clean</span> All high-weight items are PoC validated.</div>`;
+  renderDecisionGateCard();
+  renderRiskFlagsCard();
+  renderMissingEvidenceCard();
+  renderSuggestedNextStepsCard();
+  renderWinnerFlipSensitivityCard();
 
   const hpLeads = capabilities.filter((item) => item.hpScore > item.lenovoScore).map((item) => item.name);
   const lenovoLeads = capabilities.filter((item) => item.lenovoScore > item.hpScore).map((item) => item.name);
   const ties = capabilities.filter((item) => item.hpScore === item.lenovoScore).map((item) => item.name);
 
-  document.getElementById("categoryWinners").innerHTML = `
-    ${insightLine("HP leads", hpLeads, "blue")}
-    ${insightLine("Lenovo leads", lenovoLeads, "red")}
-    ${insightLine("Tied", ties, "gray")}
-  `;
+  const categoryWinners = document.getElementById("categoryWinners");
+  if (categoryWinners) {
+    categoryWinners.innerHTML = `
+      ${insightLine("HP leads", hpLeads, "blue")}
+      ${insightLine("Lenovo leads", lenovoLeads, "red")}
+      ${insightLine("Tied", ties, "gray")}
+    `;
+  }
 
   const tradeoffs = capabilities
     .map((item) => ({
       ...item,
-      impact: Math.abs(item.hpScore - item.lenovoScore) * item.weight * evidenceMultiplier(item.evidence),
+      impact: Math.abs(item.hpScore - item.lenovoScore) * item.weight * confidenceFactor(item.confidence) * evidenceFactor(item.evidence),
       leader: item.hpScore > item.lenovoScore ? "HP" : item.lenovoScore > item.hpScore ? "Lenovo" : "Tie"
     }))
     .filter((item) => item.impact > 0)
     .sort((a, b) => b.impact - a.impact)
     .slice(0, 6);
 
-  document.getElementById("tradeoffs").innerHTML = tradeoffs
+  const tradeoffsEl = document.getElementById("tradeoffs");
+  if (tradeoffsEl) {
+    tradeoffsEl.innerHTML = tradeoffs
+      .map(
+        (item) => `
+        <div class="line-item">
+          <span class="badge ${item.leader === "HP" ? "blue" : "red"}">${item.leader}</span>
+          <strong>${escapeHtml(item.name)}</strong>
+          <span class="muted">adjusted impact ${item.impact.toFixed(1)}, confidence ${item.confidence}, evidence ${item.evidence}</span>
+        </div>
+      `
+      )
+      .join("");
+  }
+}
+
+function renderDecisionGateCard() {
+  const gate = getDecisionGate();
+  const container = document.getElementById("decisionGate");
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="gate gate-${gate.status.toLowerCase()}">
+      <div class="gate-label">${gate.label}</div>
+      <div class="gate-message">${gate.message}</div>
+    </div>
+  `;
+}
+
+function renderRiskFlagsCard() {
+  const risks = getRiskFlags();
+  const container = document.getElementById("riskFlags");
+  if (!container) return;
+
+  if (!risks.length) {
+    container.innerHTML = `<div class="line-item"><span class="badge green">Clean</span> No major decision risks detected.</div>`;
+    return;
+  }
+
+  container.innerHTML = risks
     .map(
-      (item) => `
-      <div class="line-item">
-        <span class="badge ${item.leader === "HP" ? "blue" : "red"}">${item.leader}</span>
-        <strong>${item.name}</strong>
-        <span class="muted">adjusted impact ${item.impact.toFixed(1)}, evidence ${item.evidence}</span>
-      </div>
-    `
+      (risk) => `
+        <div class="list-row">
+          <span class="pill ${risk.severity.toLowerCase()}">${risk.severity}</span>
+          <div>
+            <strong>${escapeHtml(risk.title)}</strong>
+            <p>${escapeHtml(risk.detail)}</p>
+            <small>Owner: ${escapeHtml(risk.owner)}</small>
+          </div>
+        </div>
+      `
     )
     .join("");
+}
+
+function renderMissingEvidenceCard() {
+  const missing = getMissingEvidence();
+  const container = document.getElementById("missingEvidence");
+  if (!container) return;
+
+  if (!missing.length) {
+    container.innerHTML = `<div class="line-item"><span class="badge green">Clean</span> No missing evidence detected.</div>`;
+    return;
+  }
+
+  container.innerHTML = missing
+    .map(
+      (item) => `
+        <div class="list-row">
+          <span class="pill ${item.severity.toLowerCase()}">${item.severity}</span>
+          <div>
+            <strong>${escapeHtml(item.category)}</strong>
+            <p>${escapeHtml(item.reason)}</p>
+            <small>Confidence: ${escapeHtml(item.confidence)} | Evidence: ${escapeHtml(item.evidence)}</small>
+            <ul>
+              ${item.needed.map((need) => `<li>${escapeHtml(need)}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderSuggestedNextStepsCard() {
+  const steps = getSuggestedNextSteps();
+  const container = document.getElementById("suggestedNextSteps");
+  if (!container) return;
+
+  container.innerHTML = steps
+    .map(
+      (step) => `
+        <div class="list-row">
+          <span class="pill priority">${step.priority}</span>
+          <div>
+            <strong>${escapeHtml(step.title)}</strong>
+            <p>${escapeHtml(step.detail)}</p>
+          </div>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderWinnerFlipSensitivityCard() {
+  const sensitivity = getWinnerFlipSensitivity();
+  const container = document.getElementById("winnerFlipSensitivity");
+  if (!container) return;
+
+  const candidatesHtml = sensitivity.flipCandidates.length
+    ? sensitivity.flipCandidates
+        .map(
+          (candidate) => `
+            <div class="list-row">
+              <span class="pill sensitivity">${candidate.onePointImpact}</span>
+              <div>
+                <strong>${escapeHtml(candidate.category)}</strong>
+                <p>${escapeHtml(candidate.reason)}</p>
+              </div>
+            </div>
+          `
+        )
+        .join("")
+    : `<p class="muted">No single one-point category movement appears large enough to flip the recommendation.</p>`;
+
+  container.innerHTML = `
+    <p><strong>Current adjusted winner:</strong> ${escapeHtml(sensitivity.currentWinner)}</p>
+    <p><strong>Adjusted score gap:</strong> ${sensitivity.scoreGap}</p>
+    ${candidatesHtml}
+  `;
 }
 
 function insightLine(label, items, color) {
   return `
     <div class="line-item">
       <span class="badge ${color}">${label}</span>
-      <span>${items.length ? items.join(", ") : "None"}</span>
+      <span>${items.length ? items.map(escapeHtml).join(", ") : "None"}</span>
     </div>
   `;
 }
@@ -970,46 +1067,48 @@ function renderQuestions() {
   ];
 
   const probes = capabilities
-    .filter((item) => Number(item.weight) >= 8 && item.evidence !== "PoC Validated")
+    .filter((item) => isHighWeight(item) && item.evidence !== "PoC Validated")
     .flatMap((item) => [
       `Capability requiring proof: "${item.name}" | Weight ${item.weight} | Evidence ${item.evidence}`,
       ...(proofChecklist[item.id] || []).map((check) => `- ${check}`)
     ]);
 
-  document.getElementById("hpQuestions").innerHTML = renderQuestionList(hpQuestions);
-  document.getElementById("lenovoQuestions").innerHTML = renderQuestionList(lenovoQuestions);
-  document.getElementById("probeQuestions").innerHTML = renderQuestionList(probes);
+  setHtml("hpQuestions", renderQuestionList(hpQuestions));
+  setHtml("lenovoQuestions", renderQuestionList(lenovoQuestions));
+  setHtml("probeQuestions", renderQuestionList(probes));
 }
 
 function renderQuestionList(questions) {
-  return questions.map((q) => `<div class="question">${q}</div>`).join("");
+  return questions.map((q) => `<div class="question">${escapeHtml(q)}</div>`).join("");
 }
 
 function renderPoc() {
   const phases = ["Day 0–30: Foundation", "Day 31–60: Workflows", "Day 61–90: Value"];
   const root = document.getElementById("pocPlan");
 
+  if (!root) return;
+
   root.innerHTML = phases
     .map((phase) => {
       const tasks = pocTasks.filter((task) => task.phase === phase);
 
       return `
-      <div class="poc-phase">
-        <h3>${phase}</h3>
-        ${tasks
-          .map(
-            (task) => `
-          <div class="poc-task">
-            <input type="checkbox" ${task.done ? "checked" : ""} onchange="updatePoc('${task.id}', 'done', this.checked)" />
-            <div class="${task.done ? "done" : ""}">${task.task}</div>
-            <input type="text" placeholder="Owner" value="${escapeHtml(task.owner)}" onchange="updatePoc('${task.id}', 'owner', this.value)" />
-            <input type="date" value="${task.dueDate}" onchange="updatePoc('${task.id}', 'dueDate', this.value)" />
-          </div>
-        `
-          )
-          .join("")}
-      </div>
-    `;
+        <div class="poc-phase">
+          <h3>${phase}</h3>
+          ${tasks
+            .map(
+              (task) => `
+                <div class="poc-task">
+                  <input type="checkbox" ${task.done ? "checked" : ""} onchange="updatePoc('${task.id}', 'done', this.checked)" />
+                  <div class="${task.done ? "done" : ""}">${escapeHtml(task.task)}</div>
+                  <input type="text" placeholder="Owner" value="${escapeHtml(task.owner)}" onchange="updatePoc('${task.id}', 'owner', this.value)" />
+                  <input type="date" value="${escapeHtml(task.dueDate)}" onchange="updatePoc('${task.id}', 'dueDate', this.value)" />
+                </div>
+              `
+            )
+            .join("")}
+        </div>
+      `;
     })
     .join("");
 }
@@ -1020,38 +1119,39 @@ function updatePoc(id, field, value) {
 }
 
 function renderExport() {
-  const hp = weightedScore("hp");
-  const lenovo = weightedScore("lenovo");
+  const scores = getDecisionScores();
   const winner = getWinner();
-  const gate = decisionGate();
+  const gate = getDecisionGate();
 
-  document.getElementById("snapshot").innerHTML = `
-    HP WXP adjusted: <strong>${hp.toFixed(1)}</strong> |
-    Lenovo xIQ adjusted: <strong>${lenovo.toFixed(1)}</strong> |
-    Winner: <strong>${winner}</strong> |
-    Gate: <strong>${gate.status}</strong>
-  `;
+  setHtml(
+    "snapshot",
+    `
+      HP WXP adjusted: <strong>${scores.hpAdjusted.toFixed(1)}</strong> |
+      Lenovo xIQ adjusted: <strong>${scores.lenovoAdjusted.toFixed(1)}</strong> |
+      Winner: <strong>${escapeHtml(winner)}</strong> |
+      Gate: <strong>${escapeHtml(gate.label)}</strong>
+    `
+  );
 }
 
 function exportJson() {
   const payload = {
-    version: "2.0",
+    version: "3.0",
     generatedAt: new Date().toISOString(),
     scores: {
-      hpRawWeighted: rawWeightedScore("hp"),
-      lenovoRawWeighted: rawWeightedScore("lenovo"),
-      hpEvidenceAdjusted: weightedScore("hp"),
-      lenovoEvidenceAdjusted: weightedScore("lenovo"),
-      hpAverage: averageScore("hp"),
-      lenovoAverage: averageScore("lenovo"),
+      ...getDecisionScores(),
       winner: getWinner(),
-      decisionGate: decisionGate()
+      decisionGate: getDecisionGate()
     },
+    risks: getRiskFlags(),
+    missingEvidence: getMissingEvidence(),
+    suggestedNextSteps: getSuggestedNextSteps(),
+    winnerFlipSensitivity: getWinnerFlipSensitivity(),
     capabilities,
     pocTasks
   };
 
-  downloadFile("dex-compare-ai-v2-export.json", JSON.stringify(payload, null, 2), "application/json");
+  downloadFile("dex-compare-ai-v3-export.json", JSON.stringify(payload, null, 2), "application/json");
 }
 
 function exportCsv() {
@@ -1078,11 +1178,11 @@ function exportCsv() {
     item.confidence,
     item.evidence,
     String(item.evidenceLinks || "").replaceAll(",", ";"),
-    item.notes.replaceAll(",", ";")
+    String(item.notes || "").replaceAll(",", ";")
   ]);
 
-  const csv = [header, ...rows].map((row) => row.join(",")).join("\n");
-  downloadFile("dex-compare-ai-v2-scorecard.csv", csv, "text/csv");
+  const csv = [header, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
+  downloadFile("dex-compare-ai-v3-scorecard.csv", csv, "text/csv");
 }
 
 function importJson(event) {
@@ -1100,7 +1200,7 @@ function importJson(event) {
         return;
       }
 
-      capabilities = data.capabilities;
+      capabilities = normalizeCapabilities(data.capabilities);
       pocTasks = Array.isArray(data.pocTasks) ? data.pocTasks : pocTasks;
 
       save();
@@ -1116,18 +1216,17 @@ function importJson(event) {
 }
 
 function generateExecutiveReport() {
-  const hp = weightedScore("hp");
-  const lenovo = weightedScore("lenovo");
-  const hpRaw = rawWeightedScore("hp");
-  const lenovoRaw = rawWeightedScore("lenovo");
+  const scores = getDecisionScores();
   const winner = getWinner();
-  const gate = decisionGate();
-  const risks = riskFlags();
+  const gate = getDecisionGate();
+  const risks = getRiskFlags();
+  const missing = getMissingEvidence();
+  const nextSteps = getSuggestedNextSteps();
 
   const topTradeoffs = capabilities
     .map((item) => ({
       ...item,
-      impact: Math.abs(item.hpScore - item.lenovoScore) * item.weight * evidenceMultiplier(item.evidence),
+      impact: Math.abs(item.hpScore - item.lenovoScore) * item.weight * confidenceFactor(item.confidence) * evidenceFactor(item.evidence),
       leader: item.hpScore > item.lenovoScore ? "HP" : item.lenovoScore > item.hpScore ? "Lenovo" : "Tie"
     }))
     .filter((item) => item.impact > 0)
@@ -1135,6 +1234,8 @@ function generateExecutiveReport() {
     .slice(0, 5);
 
   const report = document.getElementById("executiveReport");
+  if (!report) return;
+
   report.classList.remove("hidden");
 
   report.innerHTML = `
@@ -1143,24 +1244,19 @@ function generateExecutiveReport() {
     <div class="report-section">
       <h4>1. Recommendation</h4>
       <p>
-        Current evidence-adjusted winner: <strong>${winner}</strong>.
-        HP WXP scored <strong>${hp.toFixed(1)}</strong> after evidence adjustment.
-        Lenovo xIQ scored <strong>${lenovo.toFixed(1)}</strong> after evidence adjustment.
+        Current evidence-adjusted winner: <strong>${escapeHtml(winner)}</strong>.
+        HP WXP scored <strong>${scores.hpAdjusted.toFixed(1)}</strong>.
+        Lenovo xIQ scored <strong>${scores.lenovoAdjusted.toFixed(1)}</strong>.
       </p>
       <p class="muted">
-        Raw score before evidence discount: HP ${hpRaw.toFixed(1)} vs Lenovo ${lenovoRaw.toFixed(1)}.
+        Raw score before evidence and confidence discount: HP ${scores.hpRaw.toFixed(1)} vs Lenovo ${scores.lenovoRaw.toFixed(1)}.
       </p>
     </div>
 
     <div class="report-section">
       <h4>2. Decision Gate</h4>
-      <p><span class="${gate.cssClass}">${gate.status}</span></p>
-      <p>${gate.reason}</p>
-      ${
-        gate.blockers.length
-          ? `<p><strong>Blockers:</strong> ${gate.blockers.join(", ")}</p>`
-          : `<p>No high-weight blockers remain.</p>`
-      }
+      <p><span class="${gate.cssClass}">${escapeHtml(gate.label)}</span></p>
+      <p>${escapeHtml(gate.message)}</p>
     </div>
 
     <div class="report-section">
@@ -1169,9 +1265,7 @@ function generateExecutiveReport() {
         ${topTradeoffs
           .map(
             (item) =>
-              `<li><strong>${item.leader}</strong> leads on ${item.name}. Adjusted impact ${item.impact.toFixed(
-                1
-              )}. Evidence: ${item.evidence}.</li>`
+              `<li><strong>${escapeHtml(item.leader)}</strong> leads on ${escapeHtml(item.name)}. Adjusted impact ${item.impact.toFixed(1)}. Confidence: ${escapeHtml(item.confidence)}. Evidence: ${escapeHtml(item.evidence)}.</li>`
           )
           .join("")}
       </ul>
@@ -1181,35 +1275,32 @@ function generateExecutiveReport() {
       <h4>4. Risk Flags</h4>
       ${
         risks.length
-          ? `<ul>${risks
-              .map(
-                (item) =>
-                  `<li><strong>${item.risk}</strong>: ${item.name}, weight ${item.weight}, evidence ${item.evidence}.</li>`
-              )
-              .join("")}</ul>`
-          : `<p>All high-weight categories are PoC validated.</p>`
+          ? `<ul>${risks.map((item) => `<li><strong>${escapeHtml(item.severity)}</strong>: ${escapeHtml(item.title)} ${escapeHtml(item.detail)}</li>`).join("")}</ul>`
+          : `<p>No major decision risks detected.</p>`
       }
     </div>
 
     <div class="report-section">
-      <h4>5. Required Next Proof</h4>
+      <h4>5. Missing Evidence</h4>
+      ${
+        missing.length
+          ? `<ul>${missing.slice(0, 10).map((item) => `<li><strong>${escapeHtml(item.category)}</strong>: ${escapeHtml(item.needed[0] || "Provide PoC proof.")}</li>`).join("")}</ul>`
+          : `<p>No missing evidence detected.</p>`
+      }
+    </div>
+
+    <div class="report-section">
+      <h4>6. Suggested Next Steps</h4>
       <ul>
-        ${capabilities
-          .filter((item) => Number(item.weight) >= 8 && item.evidence !== "PoC Validated")
-          .slice(0, 8)
-          .map(
-            (item) =>
-              `<li><strong>${item.name}</strong>: ${proofChecklist[item.id]?.[0] || "Provide PoC proof."}</li>`
-          )
-          .join("")}
+        ${nextSteps.map((step) => `<li><strong>${escapeHtml(step.priority)}</strong>: ${escapeHtml(step.title)} - ${escapeHtml(step.detail)}</li>`).join("")}
       </ul>
     </div>
 
     <div class="report-section">
-      <h4>6. Bottom Line</h4>
+      <h4>7. Bottom Line</h4>
       <p>
-        Use this result as a structured negotiation and PoC control system.
-        Do not make the final platform decision until high-weight claimed capabilities move to documented or PoC validated status.
+        Use this as a structured negotiation and PoC control system.
+        Final vendor selection should wait until the decision gate improves and high-weight claims become documented or PoC validated.
       </p>
     </div>
   `;
@@ -1227,15 +1318,31 @@ function downloadFile(filename, content, type) {
   URL.revokeObjectURL(url);
 }
 
-function resetData() {
-  capabilities = structuredClone(initialCapabilities);
-  pocTasks = structuredClone(initialPocTasks);
-  save();
-  render();
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function setHtml(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = value;
+}
+
+function toggleHidden(id, shouldHide) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle("hidden", shouldHide);
+}
+
+function csvEscape(value) {
+  const text = String(value ?? "");
+  if (text.includes(",") || text.includes('"') || text.includes("\n")) {
+    return `"${text.replaceAll('"', '""')}"`;
+  }
+  return text;
 }
 
 function escapeHtml(value) {
-  return String(value)
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll('"', "&quot;")
     .replaceAll("<", "&lt;")
