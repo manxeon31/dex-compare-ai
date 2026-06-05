@@ -326,7 +326,9 @@ document.querySelectorAll(".tab").forEach((button) => {
     document.querySelectorAll(".panel").forEach((panel) => panel.classList.remove("active-panel"));
 
     button.classList.add("active");
-    document.getElementById(button.dataset.tab).classList.add("active-panel");
+
+    const panel = document.getElementById(button.dataset.tab);
+    if (panel) panel.classList.add("active-panel");
 
     render();
   });
@@ -493,7 +495,10 @@ function getMissingEvidence() {
     .filter((item) => {
       const noLinks = !hasEvidenceLink(item);
       const weakConfidence = item.confidence === "Low" || item.confidence === "Unknown";
-      const weakEvidence = item.evidence === "Claimed" || item.evidence === "Missing" || item.evidence === "Unknown";
+      const weakEvidence =
+        item.evidence === "Claimed" ||
+        item.evidence === "Missing" ||
+        item.evidence === "Unknown";
 
       return noLinks || weakConfidence || weakEvidence;
     })
@@ -524,7 +529,10 @@ function getRiskFlags() {
   capabilities.forEach((item) => {
     const highWeight = isHighWeight(item);
     const lowConfidence = item.confidence === "Low" || item.confidence === "Unknown";
-    const weakEvidence = item.evidence === "Claimed" || item.evidence === "Missing" || item.evidence === "Unknown";
+    const weakEvidence =
+      item.evidence === "Claimed" ||
+      item.evidence === "Missing" ||
+      item.evidence === "Unknown";
     const tied = Number(item.hpScore) === Number(item.lenovoScore);
     const noLinks = !hasEvidenceLink(item);
 
@@ -673,7 +681,10 @@ function getWinnerFlipSensitivity() {
 
   const flipCandidates = capabilities
     .map((item) => {
-      const onePointImpact = (Number(item.weight) * confidenceFactor(item.confidence) * evidenceFactor(item.evidence)) / (totalWeight() * 5) * 100;
+      const onePointImpact =
+        ((Number(item.weight) * confidenceFactor(item.confidence) * evidenceFactor(item.evidence)) /
+          (totalWeight() * 5)) *
+        100;
 
       return {
         category: item.name,
@@ -930,9 +941,9 @@ function renderDecisionGateCard() {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="gate gate-${gate.status.toLowerCase()}">
-      <div class="gate-label">${gate.label}</div>
-      <div class="gate-message">${gate.message}</div>
+    <div class="decision-summary ${gate.status.toLowerCase()}">
+      <span class="status-pill ${gate.status.toLowerCase()}">${escapeHtml(gate.label)}</span>
+      <p>${escapeHtml(gate.message)}</p>
     </div>
   `;
 }
@@ -943,16 +954,23 @@ function renderRiskFlagsCard() {
   if (!container) return;
 
   if (!risks.length) {
-    container.innerHTML = `<div class="line-item"><span class="badge green">Clean</span> No major decision risks detected.</div>`;
+    container.innerHTML = `
+      <div class="decision-empty">
+        <span class="badge green">Clean</span>
+        <span>No major decision risks detected.</span>
+      </div>
+    `;
     return;
   }
 
   container.innerHTML = risks
     .map(
       (risk) => `
-        <div class="list-row">
-          <span class="pill ${risk.severity.toLowerCase()}">${risk.severity}</span>
-          <div>
+        <div class="decision-row">
+          <span class="badge ${risk.severity === "High" ? "red" : risk.severity === "Medium" ? "gray" : "blue"}">
+            ${escapeHtml(risk.severity)}
+          </span>
+          <div class="decision-row-body">
             <strong>${escapeHtml(risk.title)}</strong>
             <p>${escapeHtml(risk.detail)}</p>
             <small>Owner: ${escapeHtml(risk.owner)}</small>
@@ -969,20 +987,27 @@ function renderMissingEvidenceCard() {
   if (!container) return;
 
   if (!missing.length) {
-    container.innerHTML = `<div class="line-item"><span class="badge green">Clean</span> No missing evidence detected.</div>`;
+    container.innerHTML = `
+      <div class="decision-empty">
+        <span class="badge green">Clean</span>
+        <span>No missing evidence detected.</span>
+      </div>
+    `;
     return;
   }
 
   container.innerHTML = missing
     .map(
       (item) => `
-        <div class="list-row">
-          <span class="pill ${item.severity.toLowerCase()}">${item.severity}</span>
-          <div>
+        <div class="decision-row">
+          <span class="badge ${item.severity === "Critical" ? "red" : "gray"}">
+            ${escapeHtml(item.severity)}
+          </span>
+          <div class="decision-row-body">
             <strong>${escapeHtml(item.category)}</strong>
             <p>${escapeHtml(item.reason)}</p>
             <small>Confidence: ${escapeHtml(item.confidence)} | Evidence: ${escapeHtml(item.evidence)}</small>
-            <ul>
+            <ul class="compact-list">
               ${item.needed.map((need) => `<li>${escapeHtml(need)}</li>`).join("")}
             </ul>
           </div>
@@ -1000,9 +1025,9 @@ function renderSuggestedNextStepsCard() {
   container.innerHTML = steps
     .map(
       (step) => `
-        <div class="list-row">
-          <span class="pill priority">${step.priority}</span>
-          <div>
+        <div class="decision-row">
+          <span class="badge blue">${escapeHtml(step.priority)}</span>
+          <div class="decision-row-body">
             <strong>${escapeHtml(step.title)}</strong>
             <p>${escapeHtml(step.detail)}</p>
           </div>
@@ -1021,9 +1046,9 @@ function renderWinnerFlipSensitivityCard() {
     ? sensitivity.flipCandidates
         .map(
           (candidate) => `
-            <div class="list-row">
-              <span class="pill sensitivity">${candidate.onePointImpact}</span>
-              <div>
+            <div class="decision-row">
+              <span class="badge green">${candidate.onePointImpact}</span>
+              <div class="decision-row-body">
                 <strong>${escapeHtml(candidate.category)}</strong>
                 <p>${escapeHtml(candidate.reason)}</p>
               </div>
@@ -1031,11 +1056,18 @@ function renderWinnerFlipSensitivityCard() {
           `
         )
         .join("")
-    : `<p class="muted">No single one-point category movement appears large enough to flip the recommendation.</p>`;
+    : `
+      <div class="decision-empty">
+        <span class="badge green">Stable</span>
+        <span>No single one-point category movement appears large enough to flip the recommendation.</span>
+      </div>
+    `;
 
   container.innerHTML = `
-    <p><strong>Current adjusted winner:</strong> ${escapeHtml(sensitivity.currentWinner)}</p>
-    <p><strong>Adjusted score gap:</strong> ${sensitivity.scoreGap}</p>
+    <div class="decision-meta">
+      <span><strong>Current adjusted winner:</strong> ${escapeHtml(sensitivity.currentWinner)}</span>
+      <span><strong>Adjusted score gap:</strong> ${sensitivity.scoreGap}</span>
+    </div>
     ${candidatesHtml}
   `;
 }
@@ -1304,6 +1336,10 @@ function generateExecutiveReport() {
       </p>
     </div>
   `;
+}
+
+function printPdf() {
+  window.print();
 }
 
 function downloadFile(filename, content, type) {
