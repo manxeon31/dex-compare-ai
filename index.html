@@ -20,7 +20,7 @@
       <nav class="tabs">
         <button class="tab active" data-tab="dashboard">Comparison Dashboard</button>
         <button class="tab" data-tab="charts">Charts</button>
-        <button class="tab" data-tab="insights">AI Insights</button>
+        <button class="tab" data-tab="insights">Decision Engine</button>
         <button class="tab" data-tab="planner">RFP & PoC Planner</button>
         <button class="tab" data-tab="export">Export</button>
       </nav>
@@ -37,6 +37,7 @@
             </div>
             <div id="hpScore" class="big-score hp-text">0.0</div>
             <p id="hpAverage"></p>
+            <p id="hpAverage"></p>
           </div>
 
           <div class="card vendor-card">
@@ -49,6 +50,7 @@
             </div>
             <div id="lenovoScore" class="big-score lenovo-text">0.0</div>
             <p id="lenovoAverage"></p>
+            <p id="hpAdjusted" class="muted"></p>
           </div>
         </div>
 
@@ -71,6 +73,8 @@
                   <th>Lead</th>
                   <th>Weight</th>
                   <th>Confidence</th>
+                  <th>Evidence</th>
+                  <th>Evidence Links</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -106,7 +110,7 @@
 
       <section id="insights" class="panel">
         <div class="card">
-          <h2>AI Insights</h2>
+          <h2>Decision Engine</h2>
           <p class="muted">Deterministic, evidence-aware analysis generated from current scores, weights, and confidence levels.</p>
 
           <div class="callout">
@@ -115,6 +119,15 @@
             <p class="muted">Decision confidence stays limited until low-confidence, high-weight categories are validated with API docs, demo evidence, contract language, and PoC results.</p>
           </div>
 
+          <div class="soft-card">
+            <h3>Decision Gate</h3>
+            <p id="decisionGate"></p>
+          </div>
+          
+          <div class="soft-card">
+            <h3>Decision Risk Flags</h3>
+            <div id="riskFlags"></div>
+          </div>
           <div class="soft-card">
             <h3>Category winners</h3>
             <div id="categoryWinners"></div>
@@ -159,11 +172,19 @@
           <h2>Export</h2>
           <p>Export the scorecard and PoC state. For PDF, use browser print and save as PDF.</p>
 
-          <div class="button-row">
-            <button onclick="exportJson()">Export JSON</button>
-            <button onclick="exportCsv()">Export CSV</button>
-            <button onclick="window.print()" class="secondary">Print / Save PDF</button>
-          </div>
+      <div class="button-row">
+        <button onclick="exportJson()">Export JSON</button>
+        <button onclick="exportCsv()">Export CSV</button>
+        <button onclick="generateExecutiveReport()">Generate Executive Report</button>
+        <button onclick="window.print()" class="secondary">Print / Save PDF</button>
+      
+        <label class="import-label">
+          Import JSON
+          <input type="file" accept="application/json" onchange="importJson(event)" hidden />
+        </label>
+      </div>
+      
+      <div id="executiveReport" class="soft-card hidden"></div>
 
           <div class="soft-card">
             <h3>Current executive snapshot</h3>
