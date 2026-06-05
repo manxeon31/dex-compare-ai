@@ -327,4 +327,60 @@ canvas {
     box-shadow: none;
     break-inside: avoid;
   }
+  .import-label {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #cfd9e8;
+  background: white;
+  color: #334155;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.evidence-links {
+  min-width: 220px;
+}
+
+.report-title {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.report-section {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.report-section h4 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.report-section ul {
+  margin: 8px 0 0;
+  padding-left: 22px;
+}
+
+.report-section li {
+  margin-bottom: 6px;
+}
+
+.status-no-go {
+  color: #b91c1c;
+  font-weight: 900;
+}
+
+.status-conditional {
+  color: #b45309;
+  font-weight: 900;
+}
+
+.status-ready {
+  color: #15803d;
+  font-weight: 900;
+}
 }
