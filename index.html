@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DEX Compare AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./styles.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <main class="app">
+      <header class="hero">
+        <h1>DEX Compare AI</h1>
+        <p>HP Workforce Experience Platform vs Lenovo xIQ, weighted vendor evaluation with AI-style insights.</p>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="dashboard">Comparison Dashboard</button>
+        <button class="tab" data-tab="charts">Charts</button>
+        <button class="tab" data-tab="insights">AI Insights</button>
+        <button class="tab" data-tab="planner">RFP & PoC Planner</button>
+        <button class="tab" data-tab="export">Export</button>
+      </nav>
+
+      <section id="dashboard" class="panel active-panel">
+        <div class="score-grid">
+          <div class="card vendor-card">
+            <div class="vendor-header">
+              <div>
+                <h2 class="hp-text">HP WXP</h2>
+                <p>Workforce Experience Platform, DEX analytics and remediation</p>
+              </div>
+              <span id="hpBadge" class="badge green hidden">Recommended</span>
+            </div>
+            <div id="hpScore" class="big-score hp-text">0.0</div>
+            <p id="hpAverage"></p>
+          </div>
+
+          <div class="card vendor-card">
+            <div class="vendor-header">
+              <div>
+                <h2 class="lenovo-text">Lenovo xIQ</h2>
+                <p>Digital Workplace Platform, GenAI orchestration and lifecycle</p>
+              </div>
+              <span id="lenovoBadge" class="badge green hidden">Recommended</span>
+            </div>
+            <div id="lenovoScore" class="big-score lenovo-text">0.0</div>
+            <p id="lenovoAverage"></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <div>
+              <h2>Weighted Scoring Matrix</h2>
+              <p>Adjust scores, weights, confidence, and evidence notes. Everything recalculates instantly.</p>
+            </div>
+            <button onclick="resetData()" class="secondary">Reset</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Capability</th>
+                  <th>HP</th>
+                  <th>Lenovo</th>
+                  <th>Lead</th>
+                  <th>Weight</th>
+                  <th>Confidence</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="scoreTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="charts" class="panel">
+        <div class="card">
+          <h2>Score Visualizations</h2>
+
+          <div class="chart-grid">
+            <div class="soft-card">
+              <h3>Overall Weighted Score</h3>
+              <canvas id="barChart"></canvas>
+            </div>
+
+            <div class="soft-card">
+              <h3>Capability Radar</h3>
+              <canvas id="radarChart"></canvas>
+            </div>
+          </div>
+
+          <div class="soft-card feature-block">
+            <h3>Feature Heatmap</h3>
+            <p>Darker = stronger capability score, 1 to 5.</p>
+            <div id="heatmap"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="insights" class="panel">
+        <div class="card">
+          <h2>AI Insights</h2>
+          <p class="muted">Deterministic, evidence-aware analysis generated from current scores, weights, and confidence levels.</p>
+
+          <div class="callout">
+            <h3>Overall recommendation</h3>
+            <p id="winnerText"></p>
+            <p class="muted">Decision confidence stays limited until low-confidence, high-weight categories are validated with API docs, demo evidence, contract language, and PoC results.</p>
+          </div>
+
+          <div class="soft-card">
+            <h3>Category winners</h3>
+            <div id="categoryWinners"></div>
+          </div>
+
+          <div class="soft-card">
+            <h3>Key tradeoffs, weight-adjusted</h3>
+            <div id="tradeoffs"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="planner" class="panel">
+        <div class="card">
+          <h2>RFP Question Generator</h2>
+          <p class="muted">Vendor-specific questions plus probes for high-weight / low-confidence capabilities.</p>
+
+          <div class="soft-card">
+            <h3>Questions for HP</h3>
+            <div id="hpQuestions"></div>
+          </div>
+
+          <div class="soft-card">
+            <h3>Questions for Lenovo</h3>
+            <div id="lenovoQuestions"></div>
+          </div>
+
+          <div class="soft-card">
+            <h3>Auto-generated probes</h3>
+            <div id="probeQuestions"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Proof-of-Concept Validation Plan</h2>
+          <div id="pocPlan"></div>
+        </div>
+      </section>
+
+      <section id="export" class="panel">
+        <div class="card">
+          <h2>Export</h2>
+          <p>Export the scorecard and PoC state. For PDF, use browser print and save as PDF.</p>
+
+          <div class="button-row">
+            <button onclick="exportJson()">Export JSON</button>
+            <button onclick="exportCsv()">Export CSV</button>
+            <button onclick="window.print()" class="secondary">Print / Save PDF</button>
+          </div>
+
+          <div class="soft-card">
+            <h3>Current executive snapshot</h3>
+            <p id="snapshot"></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
