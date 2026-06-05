@@ -309,36 +309,7 @@ canvas {
   }
 }
 
-@media print {
-  .tabs,
-  button {
-    display: none;
-  }
-
-  .panel {
-    display: block;
-  }
-
-  body {
-    background: white;
-  }
-
-  .card {
-    box-shadow: none;
-    break-inside: avoid;
-  }
-  .import-label {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid #cfd9e8;
-  background: white;
-  color: #334155;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
+/* ===== Decision Engine UI polish ===== */
 .evidence-links {
   min-width: 220px;
 }
@@ -369,157 +340,30 @@ canvas {
   margin-bottom: 6px;
 }
 
+.status-ready,
+.status-conditional,
 .status-no-go {
-  color: #b91c1c;
-  font-weight: 900;
-}
-
-.status-conditional {
-  color: #b45309;
-  font-weight: 900;
+  display: inline-block;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
 }
 
 .status-ready {
-  color: #15803d;
-  font-weight: 900;
-}
-  .gate {
-  border-radius: 12px;
-  padding: 16px;
-  border-left: 5px solid #94a3b8;
-  background: #f8fafc;
-}
-
-.gate-label {
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-
-.gate-message {
-  color: #475569;
-  line-height: 1.45;
-}
-
-.gate-ready {
-  border-left-color: #22c55e;
-  background: #ecfdf5;
-}
-
-.gate-poc_required {
-  border-left-color: #f59e0b;
-  background: #fffbeb;
-}
-
-.gate-exec_review {
-  border-left-color: #f97316;
-  background: #fff7ed;
-}
-
-.gate-blocked {
-  border-left-color: #ef4444;
-  background: #fef2f2;
-}
-
-.list-row {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 12px 0;
-  border-bottom: 1px dashed #cbd5e1;
-}
-
-.list-row:last-child {
-  border-bottom: none;
-}
-
-.list-row p {
-  margin: 4px 0;
-  color: #475569;
-}
-
-.list-row small {
-  color: #64748b;
-}
-
-.list-row ul {
-  margin: 8px 0 0 18px;
-  padding: 0;
-  color: #475569;
-}
-
-.pill {
-  display: inline-block;
-  min-width: 72px;
-  text-align: center;
-  border-radius: 999px;
-  padding: 4px 8px;
-  font-size: 12px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.pill.high,
-.pill.critical {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.pill.medium,
-.pill.important {
-  background: #fef3c7;
-  color: #92400e;
-}
-
-.pill.low {
-  background: #e0f2fe;
-  color: #075985;
-}
-
-.pill.priority {
-  background: #e0e7ff;
-  color: #3730a3;
-}
-
-.pill.sensitivity {
   background: #dcfce7;
   color: #166534;
 }
 
-.status-ready {
-  display: inline-block;
-  background: #dcfce7;
-  color: #166534;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-
 .status-conditional {
-  display: inline-block;
   background: #fef3c7;
   color: #92400e;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 999px;
 }
 
 .status-no-go {
-  display: inline-block;
   background: #fee2e2;
   color: #991b1b;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 999px;
 }
 
-.evidence-links {
-  min-width: 220px;
-}
-
-.muted {
-  color: #64748b;
-}
-  /* Decision Engine polish */
 .decision-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -578,9 +422,10 @@ canvas {
   color: #991b1b;
 }
 
+/* Critical fix: badge and row title are one row, not stacked */
 .decision-row {
   display: grid;
-  grid-template-columns: 82px 1fr;
+  grid-template-columns: 86px minmax(0, 1fr);
   column-gap: 12px;
   align-items: start;
   padding: 14px 0;
@@ -592,11 +437,14 @@ canvas {
 }
 
 .decision-row > .badge {
-  margin-top: 2px;
+  grid-column: 1;
+  grid-row: 1;
   justify-self: start;
+  margin-top: 0;
 }
 
 .decision-row-body {
+  grid-column: 2;
   min-width: 0;
 }
 
@@ -623,12 +471,15 @@ canvas {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
+  min-width: 58px;
   border-radius: 999px;
   padding: 5px 10px;
   font-size: 12px;
   font-weight: 800;
   line-height: 1;
   white-space: nowrap;
+  height: auto;
 }
 
 .decision-empty {
@@ -657,7 +508,6 @@ canvas {
   color: #475569;
 }
 
-/* Export tab button alignment */
 .export-actions {
   display: flex;
   flex-wrap: wrap;
@@ -694,7 +544,6 @@ canvas {
   display: none;
 }
 
-/* Print / Save PDF cleanup */
 @media print {
   .tabs,
   .tab,
@@ -722,5 +571,4 @@ canvas {
   canvas {
     max-height: 360px !important;
   }
-}
 }
