@@ -1,214 +1,250 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>DEX Compare AI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEX Tool Comparison Portal | HP WXP vs Lenovo xIQ</title>
 
-    <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="style.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 
-  <body>
-    <main class="app">
-      <header class="hero">
-        <h1>DEX Compare AI</h1>
-        <p>HP Workforce Experience Platform vs Lenovo xIQ, weighted vendor evaluation with AI-style insights.</p>
-      </header>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">DEX Tool Comparison Portal</p>
+      <h1>HP WXP vs Lenovo xIQ</h1>
+      <p class="hero-copy">
+        Evidence-aware scorecard, PoC tracker, decision risk engine, and executive report generator.
+      </p>
+    </div>
 
-      <nav class="tabs">
-        <button class="tab active" data-tab="dashboard">Comparison Dashboard</button>
-        <button class="tab" data-tab="charts">Charts</button>
-        <button class="tab" data-tab="insights">Decision Engine</button>
-        <button class="tab" data-tab="planner">RFP & PoC Planner</button>
-        <button class="tab" data-tab="export">Export</button>
-      </nav>
+    <div class="hero-actions">
+      <button type="button" onclick="resetData()">Reset Demo Data</button>
+    </div>
+  </header>
 
-      <section id="dashboard" class="panel active-panel">
-        <div class="score-grid">
-          <div class="card vendor-card">
-            <div class="vendor-header">
-              <div>
-                <h2 class="hp-text">HP WXP</h2>
-                <p>Workforce Experience Platform, DEX analytics and remediation</p>
-              </div>
-              <span id="hpBadge" class="badge green hidden">Recommended</span>
-            </div>
-            <div id="hpScore" class="big-score hp-text">0.0</div>
-            <p id="hpAverage"></p>
-            <p id="hpAverage"></p>
-          </div>
+  <nav class="tabs">
+    <button class="tab active" data-tab="dashboard">Dashboard</button>
+    <button class="tab" data-tab="charts">Charts</button>
+    <button class="tab" data-tab="decision">Decision Engine</button>
+    <button class="tab" data-tab="questions">Proof Questions</button>
+    <button class="tab" data-tab="poc">PoC Plan</button>
+    <button class="tab" data-tab="export">Export</button>
+  </nav>
 
-          <div class="card vendor-card">
-            <div class="vendor-header">
-              <div>
-                <h2 class="lenovo-text">Lenovo xIQ</h2>
-                <p>Digital Workplace Platform, GenAI orchestration and lifecycle</p>
-              </div>
-              <span id="lenovoBadge" class="badge green hidden">Recommended</span>
-            </div>
-            <div id="lenovoScore" class="big-score lenovo-text">0.0</div>
-            <p id="lenovoAverage"></p>
-            <p id="hpAdjusted" class="muted"></p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="section-head">
-            <div>
-              <h2>Weighted Scoring Matrix</h2>
-              <p>Adjust scores, weights, confidence, and evidence notes. Everything recalculates instantly.</p>
-            </div>
-            <button onclick="resetData()" class="secondary">Reset</button>
-          </div>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Capability</th>
-                  <th>HP</th>
-                  <th>Lenovo</th>
-                  <th>Lead</th>
-                  <th>Weight</th>
-                  <th>Confidence</th>
-                  <th>Evidence</th>
-                  <th>Evidence Links</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody id="scoreTable"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section id="charts" class="panel">
-        <div class="card">
-          <h2>Score Visualizations</h2>
-
-          <div class="chart-grid">
-            <div class="soft-card">
-              <h3>Overall Weighted Score</h3>
-              <canvas id="barChart"></canvas>
-            </div>
-
-            <div class="soft-card">
-              <h3>Capability Radar</h3>
-              <canvas id="radarChart"></canvas>
-            </div>
-          </div>
-
-          <div class="soft-card feature-block">
-            <h3>Feature Heatmap</h3>
-            <p>Darker = stronger capability score, 1 to 5.</p>
-            <div id="heatmap"></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="insights" class="panel">
-        <div class="card">
-          <h2>Decision Engine</h2>
-          <p class="muted">Deterministic, evidence-aware analysis generated from current scores, weights, and confidence levels.</p>
-
-          <div class="callout">
-            <h3>Overall recommendation</h3>
-            <p id="winnerText"></p>
-            <p class="muted">Decision confidence stays limited until low-confidence, high-weight categories are validated with API docs, demo evidence, contract language, and PoC results.</p>
-          </div>
-
-          <section class="card">
-            <h3>Decision Gate</h3>
-            <div id="decisionGate"></div>
-          </section>
-          
-          <section class="card">
-            <h3>Decision Risk Flags</h3>
-            <div id="riskFlags"></div>
-          </section>
-          
-          <section class="card">
-            <h3>Missing Evidence</h3>
-            <div id="missingEvidence"></div>
-          </section>
-          
-          <section class="card">
-            <h3>Suggested Next Steps</h3>
-            <div id="suggestedNextSteps"></div>
-          </section>
-          
-          <section class="card">
-            <h3>Winner-Flip Sensitivity</h3>
-            <div id="winnerFlipSensitivity"></div>
-          </section>
-          <div class="soft-card">
-            <h3>Category winners</h3>
-            <div id="categoryWinners"></div>
-          </div>
-
-          <div class="soft-card">
-            <h3>Key tradeoffs, weight-adjusted</h3>
-            <div id="tradeoffs"></div>
-          </div>
-        </div>
-      </section>
-
-      <section id="planner" class="panel">
-        <div class="card">
-          <h2>RFP Question Generator</h2>
-          <p class="muted">Vendor-specific questions plus probes for high-weight / low-confidence capabilities.</p>
-
-          <div class="soft-card">
-            <h3>Questions for HP</h3>
-            <div id="hpQuestions"></div>
-          </div>
-
-          <div class="soft-card">
-            <h3>Questions for Lenovo</h3>
-            <div id="lenovoQuestions"></div>
-          </div>
-
-          <div class="soft-card">
-            <h3>Auto-generated probes</h3>
-            <div id="probeQuestions"></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Proof-of-Concept Validation Plan</h2>
-          <div id="pocPlan"></div>
-        </div>
-      </section>
-
-      <section id="export" class="panel">
-        <div class="card">
-          <h2>Export</h2>
-          <p>Export the scorecard and PoC state. For PDF, use browser print and save as PDF.</p>
-
-      <div class="button-row">
-        <button onclick="exportJson()">Export JSON</button>
-        <button onclick="exportCsv()">Export CSV</button>
-        <button onclick="generateExecutiveReport()">Generate Executive Report</button>
-        <button onclick="window.print()" class="secondary">Print / Save PDF</button>
-      
-        <label class="import-label">
-          Import JSON
-          <input type="file" accept="application/json" onchange="importJson(event)" hidden />
-        </label>
+  <main>
+    <!-- Dashboard -->
+    <section id="dashboard" class="panel active-panel">
+      <div class="section-header">
+        <h2>Executive Scorecard</h2>
+        <p>Weighted scoring with confidence and evidence adjustment.</p>
       </div>
-      
-      <div id="executiveReport" class="soft-card hidden"></div>
 
-          <div class="soft-card">
-            <h3>Current executive snapshot</h3>
-            <p id="snapshot"></p>
+      <div class="score-grid">
+        <div class="card score-card hp-card">
+          <div class="score-topline">
+            <h3>HP WXP</h3>
+            <span id="hpBadge" class="winner-badge hidden">Current Winner</span>
           </div>
-        </div>
-      </section>
-    </main>
 
-    <script src="./app.js"></script>
-  </body>
+          <div id="hpScore" class="big-score">0.0</div>
+          <p id="hpAverage" class="muted"></p>
+          <p id="hpAdjusted" class="adjusted-score"></p>
+        </div>
+
+        <div class="card score-card lenovo-card">
+          <div class="score-topline">
+            <h3>Lenovo xIQ</h3>
+            <span id="lenovoBadge" class="winner-badge hidden">Current Winner</span>
+          </div>
+
+          <div id="lenovoScore" class="big-score">0.0</div>
+          <p id="lenovoAverage" class="muted"></p>
+          <p id="lenovoAdjusted" class="adjusted-score"></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Capability Score Table</h3>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>HP</th>
+                <th>Lenovo</th>
+                <th>Lead</th>
+                <th>Weight</th>
+                <th>Confidence</th>
+                <th>Evidence</th>
+                <th>Evidence Links</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+
+            <tbody id="scoreTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section id="charts" class="panel">
+      <div class="section-header">
+        <h2>Visual Analysis</h2>
+        <p>Score comparison, capability radar, and heatmap view.</p>
+      </div>
+
+      <div class="chart-grid">
+        <div class="card">
+          <h3>Evidence-Adjusted Score</h3>
+          <canvas id="barChart"></canvas>
+        </div>
+
+        <div class="card">
+          <h3>Capability Radar</h3>
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Capability Heatmap</h3>
+        <div id="heatmap" class="heatmap"></div>
+      </div>
+    </section>
+
+    <!-- Decision Engine -->
+    <section id="decision" class="panel">
+      <div class="section-header">
+        <h2>Decision Engine</h2>
+        <p>
+          Deterministic, evidence-aware analysis generated from current scores,
+          weights, confidence levels, and proof status.
+        </p>
+      </div>
+
+      <div class="card recommendation-card">
+        <h3>Overall Recommendation</h3>
+        <p id="winnerText"></p>
+      </div>
+
+      <div class="decision-grid">
+        <div class="card decision-card">
+          <h3>Decision Gate</h3>
+          <div id="decisionGate"></div>
+        </div>
+
+        <div class="card decision-card">
+          <h3>Decision Risk Flags</h3>
+          <div id="riskFlags"></div>
+        </div>
+
+        <div class="card decision-card">
+          <h3>Missing Evidence</h3>
+          <div id="missingEvidence"></div>
+        </div>
+
+        <div class="card decision-card">
+          <h3>Suggested Next Steps</h3>
+          <div id="suggestedNextSteps"></div>
+        </div>
+
+        <div class="card decision-card">
+          <h3>Winner-Flip Sensitivity</h3>
+          <div id="winnerFlipSensitivity"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Category Winners</h3>
+        <div id="categoryWinners"></div>
+      </div>
+
+      <div class="card">
+        <h3>Key Tradeoffs, Weight-Adjusted</h3>
+        <div id="tradeoffs"></div>
+      </div>
+    </section>
+
+    <!-- Proof Questions -->
+    <section id="questions" class="panel">
+      <div class="section-header">
+        <h2>Vendor Proof Questions</h2>
+        <p>Use these to turn vendor claims into decision-grade evidence.</p>
+      </div>
+
+      <div class="question-grid">
+        <div class="card">
+          <h3>HP WXP Questions</h3>
+          <div id="hpQuestions"></div>
+        </div>
+
+        <div class="card">
+          <h3>Lenovo xIQ Questions</h3>
+          <div id="lenovoQuestions"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>PoC Probe Questions</h3>
+        <div id="probeQuestions"></div>
+      </div>
+    </section>
+
+    <!-- PoC Plan -->
+    <section id="poc" class="panel">
+      <div class="section-header">
+        <h2>90-Day PoC Plan</h2>
+        <p>Track proof tasks, owners, due dates, and completion status.</p>
+      </div>
+
+      <div id="pocPlan" class="poc-grid"></div>
+    </section>
+
+    <!-- Export -->
+    <section id="export" class="panel">
+      <div class="section-header">
+        <h2>Export / Report</h2>
+        <p>Export reusable data, generate a report, or print to PDF.</p>
+      </div>
+
+      <div class="card">
+        <h3>Current Snapshot</h3>
+        <p id="snapshot"></p>
+
+        <div class="export-actions">
+          <button type="button" onclick="exportJson()">Export JSON</button>
+          <button type="button" onclick="exportCsv()">Export CSV</button>
+          <button type="button" onclick="generateExecutiveReport()">Generate Executive Report</button>
+          <button type="button" onclick="printPdf()">Print / Save PDF</button>
+
+          <label class="button-like" for="importJsonFile">Import JSON</label>
+          <input
+            id="importJsonFile"
+            class="hidden-file-input"
+            type="file"
+            accept="application/json,.json"
+            onchange="importJson(event)"
+          />
+        </div>
+
+        <p class="muted">
+          JSON export preserves the scorecard, PoC tasks, risk flags, missing evidence,
+          suggested next steps, and winner-flip sensitivity.
+        </p>
+      </div>
+
+      <div id="executiveReport" class="card executive-report hidden"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>DEX comparison engine | Evidence beats vendor perfume.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
 </html>
