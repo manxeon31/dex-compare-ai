@@ -891,10 +891,134 @@ function renderInsights() {
   }
 
   renderDecisionGateCard();
-  renderRiskFlagsCard();
-  renderMissingEvidenceCard();
-  renderSuggestedNextStepsCard();
-  renderWinnerFlipSensitivityCard();
+function renderRiskFlagsCard() {
+  const risks = getRiskFlags();
+  const container = document.getElementById("riskFlags");
+  if (!container) return;
+
+  if (!risks.length) {
+    container.innerHTML = `
+      <div class="line-item">
+        <span class="badge green">Clean</span>
+        <strong>No major decision risks detected.</strong>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = risks
+    .map(
+      (risk) => `
+        <div class="decision-line-item">
+          <div class="decision-title-line">
+            <span class="badge ${risk.severity === "High" ? "red" : risk.severity === "Medium" ? "gray" : "blue"}">
+              ${escapeHtml(risk.severity)}
+            </span>
+            <strong>${escapeHtml(risk.title)}</strong>
+          </div>
+
+          <p>${escapeHtml(risk.detail)}</p>
+          <small>Owner: ${escapeHtml(risk.owner)}</small>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderMissingEvidenceCard() {
+  const missing = getMissingEvidence();
+  const container = document.getElementById("missingEvidence");
+  if (!container) return;
+
+  if (!missing.length) {
+    container.innerHTML = `
+      <div class="line-item">
+        <span class="badge green">Clean</span>
+        <strong>No missing evidence detected.</strong>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = missing
+    .map(
+      (item) => `
+        <div class="decision-line-item">
+          <div class="decision-title-line">
+            <span class="badge ${item.severity === "Critical" ? "red" : "gray"}">
+              ${escapeHtml(item.severity)}
+            </span>
+            <strong>${escapeHtml(item.category)}</strong>
+          </div>
+
+          <p>${escapeHtml(item.reason)}</p>
+          <small>Confidence: ${escapeHtml(item.confidence)} | Evidence: ${escapeHtml(item.evidence)}</small>
+
+          <ul class="compact-list">
+            ${item.needed.map((need) => `<li>${escapeHtml(need)}</li>`).join("")}
+          </ul>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderSuggestedNextStepsCard() {
+  const steps = getSuggestedNextSteps();
+  const container = document.getElementById("suggestedNextSteps");
+  if (!container) return;
+
+  container.innerHTML = steps
+    .map(
+      (step) => `
+        <div class="decision-line-item">
+          <div class="decision-title-line">
+            <span class="badge blue">${escapeHtml(step.priority)}</span>
+            <strong>${escapeHtml(step.title)}</strong>
+          </div>
+
+          <p>${escapeHtml(step.detail)}</p>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderWinnerFlipSensitivityCard() {
+  const sensitivity = getWinnerFlipSensitivity();
+  const container = document.getElementById("winnerFlipSensitivity");
+  if (!container) return;
+
+  const candidatesHtml = sensitivity.flipCandidates.length
+    ? sensitivity.flipCandidates
+        .map(
+          (candidate) => `
+            <div class="decision-line-item">
+              <div class="decision-title-line">
+                <span class="badge green">${candidate.onePointImpact}</span>
+                <strong>${escapeHtml(candidate.category)}</strong>
+              </div>
+
+              <p>${escapeHtml(candidate.reason)}</p>
+            </div>
+          `
+        )
+        .join("")
+    : `
+      <div class="line-item">
+        <span class="badge green">Stable</span>
+        <strong>No single one-point category movement appears large enough to flip the recommendation.</strong>
+      </div>
+    `;
+
+  container.innerHTML = `
+    <div class="decision-meta">
+      <span><strong>Current adjusted winner:</strong> ${escapeHtml(sensitivity.currentWinner)}</span>
+      <span><strong>Adjusted score gap:</strong> ${sensitivity.scoreGap}</span>
+    </div>
+    ${candidatesHtml}
+  `;
+}
 
   const hpLeads = capabilities.filter((item) => item.hpScore > item.lenovoScore).map((item) => item.name);
   const lenovoLeads = capabilities.filter((item) => item.lenovoScore > item.hpScore).map((item) => item.name);
