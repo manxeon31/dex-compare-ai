@@ -1,29 +1,35 @@
+const VENDORS = [
+  { id: "hp", name: "HP WXP", shortName: "HP", scoreField: "hpScore", color: "rgba(2,132,199,0.85)", borderColor: "rgba(2,132,199,1)", textClass: "hp-text", badgeClass: "blue" },
+  { id: "lenovo", name: "Lenovo xIQ", shortName: "Lenovo", scoreField: "lenovoScore", color: "rgba(220,38,38,0.85)", borderColor: "rgba(220,38,38,1)", textClass: "lenovo-text", badgeClass: "red" },
+  { id: "nexthink", name: "Nexthink", shortName: "Nexthink", scoreField: "nexthinkScore", color: "rgba(22,163,74,0.85)", borderColor: "rgba(22,163,74,1)", textClass: "nexthink-text", badgeClass: "green" }
+];
+
 const initialCapabilities = [
-  { id: "endpoint-telemetry", name: "Endpoint telemetry", group: "Core DEX", weight: 8, hpScore: 4, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Telemetry data source documentation", "Admin console screenshots", "Device-level sample output", "PoC validation result"] },
-  { id: "ai-recommendations", name: "AI recommendations", group: "AI / Automation", weight: 8, hpScore: 4, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Recommendation logic explanation", "Real workflow demo", "False-positive handling", "Admin override proof"] },
-  { id: "automated-remediation", name: "Automated remediation", group: "AI / Automation", weight: 8, hpScore: 4, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Before/after remediation logs", "Rollback behavior", "Approval workflow", "PoC test result"] },
-  { id: "lifecycle", name: "Hardware refresh / lifecycle", group: "Lifecycle", weight: 6, hpScore: 4, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Warranty/lifecycle integration proof", "Battery health data", "Asset aging report", "Refresh recommendation logic"] },
-  { id: "security", name: "Security posture", group: "Security", weight: 8, hpScore: 4, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Security data source", "Compliance mapping", "Policy enforcement proof", "Audit trail"] },
-  { id: "multi-vendor", name: "Multi-vendor / OEM-agnostic support", group: "Fleet Coverage", weight: 10, hpScore: 5, lenovoScore: 3, confidence: "Low", evidence: "Claimed", evidenceLinks: "", notes: "", proofNeeded: ["Supported OEM list", "API documentation", "Known limitations", "Mixed-fleet PoC result"] },
-  { id: "employee-sentiment", name: "Employee sentiment", group: "Experience", weight: 8, hpScore: 5, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Survey data model", "Sentiment scoring method", "Privacy model", "Sample dashboard"] },
-  { id: "microsoft", name: "Microsoft ecosystem integration", group: "Integration", weight: 8, hpScore: 5, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Intune integration proof", "Entra ID / RBAC proof", "Microsoft Graph integration", "Export/reporting proof"] },
-  { id: "reporting", name: "Reporting / BI", group: "Analytics", weight: 4, hpScore: 5, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Export format", "BI connector proof", "Scheduled report demo", "Data dictionary"] },
-  { id: "genai-assistant", name: "GenAI assistant", group: "AI / Automation", weight: 8, hpScore: 3, lenovoScore: 5, confidence: "Low", evidence: "Claimed", evidenceLinks: "", notes: "", proofNeeded: ["Real workflow demo", "Prompt/action boundary", "Data access model", "Admin controls", "Audit logging"] },
-  { id: "servicenow", name: "ServiceNow integration", group: "Integration", weight: 10, hpScore: 3, lenovoScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Ticket creation demo", "Ticket update demo", "Field mapping", "Integration architecture", "SLA impact proof"] },
-  { id: "governance", name: "Governance / auditability", group: "Governance", weight: 6, hpScore: 3, lenovoScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Admin audit trail", "RBAC model", "Change history", "Compliance export"] }
+  { id: "endpoint-telemetry", name: "Endpoint telemetry", group: "Core DEX", weight: 8, hpScore: 4, lenovoScore: 4, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Telemetry data source documentation", "Admin console screenshots", "Device-level sample output", "PoC validation result"] },
+  { id: "ai-recommendations", name: "AI recommendations", group: "AI / Automation", weight: 8, hpScore: 4, lenovoScore: 4, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Recommendation logic explanation", "Real workflow demo", "False-positive handling", "Admin override proof"] },
+  { id: "automated-remediation", name: "Automated remediation", group: "AI / Automation", weight: 8, hpScore: 4, lenovoScore: 4, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Before/after remediation logs", "Rollback behavior", "Approval workflow", "PoC test result"] },
+  { id: "lifecycle", name: "Hardware refresh / lifecycle", group: "Lifecycle", weight: 6, hpScore: 4, lenovoScore: 4, nexthinkScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Warranty/lifecycle integration proof", "Battery health data", "Asset aging report", "Refresh recommendation logic"] },
+  { id: "security", name: "Security posture", group: "Security", weight: 8, hpScore: 4, lenovoScore: 4, nexthinkScore: 4, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Security data source", "Compliance mapping", "Policy enforcement proof", "Audit trail"] },
+  { id: "multi-vendor", name: "Multi-vendor / OEM-agnostic support", group: "Fleet Coverage", weight: 10, hpScore: 5, lenovoScore: 3, nexthinkScore: 5, confidence: "Low", evidence: "Claimed", evidenceLinks: "", notes: "", proofNeeded: ["Supported OEM list", "API documentation", "Known limitations", "Mixed-fleet PoC result"] },
+  { id: "employee-sentiment", name: "Employee sentiment", group: "Experience", weight: 8, hpScore: 5, lenovoScore: 4, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Survey data model", "Sentiment scoring method", "Privacy model", "Sample dashboard"] },
+  { id: "microsoft", name: "Microsoft ecosystem integration", group: "Integration", weight: 8, hpScore: 5, lenovoScore: 4, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Intune integration proof", "Entra ID / RBAC proof", "Microsoft Graph integration", "Export/reporting proof"] },
+  { id: "reporting", name: "Reporting / BI", group: "Analytics", weight: 4, hpScore: 5, lenovoScore: 4, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Export format", "BI connector proof", "Scheduled report demo", "Data dictionary"] },
+  { id: "genai-assistant", name: "GenAI assistant", group: "AI / Automation", weight: 8, hpScore: 3, lenovoScore: 5, nexthinkScore: 4, confidence: "Low", evidence: "Claimed", evidenceLinks: "", notes: "", proofNeeded: ["Real workflow demo", "Prompt/action boundary", "Data access model", "Admin controls", "Audit logging"] },
+  { id: "servicenow", name: "ServiceNow integration", group: "Integration", weight: 10, hpScore: 3, lenovoScore: 5, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Ticket creation demo", "Ticket update demo", "Field mapping", "Integration architecture", "SLA impact proof"] },
+  { id: "governance", name: "Governance / auditability", group: "Governance", weight: 6, hpScore: 3, lenovoScore: 4, nexthinkScore: 5, confidence: "Medium", evidence: "Demoed", evidenceLinks: "", notes: "", proofNeeded: ["Admin audit trail", "RBAC model", "Change history", "Compliance export"] }
 ];
 
 const initialPocTasks = [
-  ["deploy-agents", "Day 0–30: Foundation", "Deploy agents on ~500 mixed-vendor devices: Windows + macOS"],
-  ["servicenow-cmdb", "Day 0–30: Foundation", "Stand up ServiceNow ticket / CMDB integration"],
-  ["telemetry-baseline", "Day 0–30: Foundation", "Baseline telemetry ingestion and data quality"],
-  ["remediation", "Day 31–60: Workflows", "Test automated remediation catalog, rollback, and approvals"],
-  ["sentiment", "Day 31–60: Workflows", "Run employee sentiment survey and persona mapping"],
-  ["bi", "Day 31–60: Workflows", "Validate reporting / BI dashboards and exports"],
-  ["ticket-reduction", "Day 61–90: Value", "Measure helpdesk ticket reduction"],
-  ["refresh", "Day 61–90: Value", "Validate hardware refresh recommendations"],
-  ["roi", "Day 61–90: Value", "ROI analysis and governance / audit review"],
-  ["decision", "Day 61–90: Value", "Go / no-go decision with confidence update"]
+  ["deploy-agents", "Day 0-30: Foundation", "Deploy agents on ~500 mixed-vendor devices: Windows + macOS"],
+  ["servicenow-cmdb", "Day 0-30: Foundation", "Stand up ServiceNow ticket / CMDB integration"],
+  ["telemetry-baseline", "Day 0-30: Foundation", "Baseline telemetry ingestion and data quality"],
+  ["remediation", "Day 31-60: Workflows", "Test automated remediation catalog, rollback, and approvals"],
+  ["sentiment", "Day 31-60: Workflows", "Run employee sentiment survey and persona mapping"],
+  ["bi", "Day 31-60: Workflows", "Validate reporting / BI dashboards and exports"],
+  ["ticket-reduction", "Day 61-90: Value", "Measure helpdesk ticket reduction"],
+  ["refresh", "Day 61-90: Value", "Validate hardware refresh recommendations"],
+  ["roi", "Day 61-90: Value", "ROI analysis and governance / audit review"],
+  ["decision", "Day 61-90: Value", "Go / no-go decision with confidence update"]
 ].map(([id, phase, task]) => ({ id, phase, task, owner: "", dueDate: "", done: false }));
 
 const proofChecklist = Object.fromEntries(initialCapabilities.map((item) => [item.id, item.proofNeeded]));
@@ -105,16 +111,24 @@ function totalWeight() {
   return capabilities.reduce((sum, item) => sum + Number(item.weight || 0), 0);
 }
 
+function getVendor(vendorId) {
+  return VENDORS.find((vendor) => vendor.id === vendorId) || VENDORS[0];
+}
+
+function vendorScore(item, vendorId) {
+  return Number(item[getVendor(vendorId).scoreField] || 0);
+}
+
 function rawWeightedScore(vendor) {
   const weightTotal = totalWeight();
-  const weighted = capabilities.reduce((sum, item) => sum + Number(vendor === "hp" ? item.hpScore : item.lenovoScore) * Number(item.weight), 0);
+  const weighted = capabilities.reduce((sum, item) => sum + vendorScore(item, vendor) * Number(item.weight), 0);
   return weightTotal ? (weighted / (weightTotal * 5)) * 100 : 0;
 }
 
 function weightedScore(vendor) {
   const weightTotal = totalWeight();
   const weighted = capabilities.reduce((sum, item) => {
-    const score = Number(vendor === "hp" ? item.hpScore : item.lenovoScore);
+    const score = vendorScore(item, vendor);
     return sum + score * Number(item.weight) * confidenceFactor(item.confidence) * evidenceFactor(item.evidence);
   }, 0);
 
@@ -123,31 +137,43 @@ function weightedScore(vendor) {
 
 function averageScore(vendor) {
   return capabilities.length
-    ? capabilities.reduce((sum, item) => sum + Number(vendor === "hp" ? item.hpScore : item.lenovoScore), 0) / capabilities.length
+    ? capabilities.reduce((sum, item) => sum + vendorScore(item, vendor), 0) / capabilities.length
     : 0;
 }
 
 function getDecisionScores() {
-  const hpRaw = rawWeightedScore("hp");
-  const lenovoRaw = rawWeightedScore("lenovo");
-  const hpAdjusted = weightedScore("hp");
-  const lenovoAdjusted = weightedScore("lenovo");
+  const vendorScores = Object.fromEntries(VENDORS.map((vendor) => [
+    vendor.id,
+    {
+      raw: rawWeightedScore(vendor.id),
+      adjusted: weightedScore(vendor.id)
+    }
+  ]));
+  const sorted = [...VENDORS].sort((a, b) => vendorScores[b.id].adjusted - vendorScores[a.id].adjusted);
+  const top = sorted[0];
+  const second = sorted[1];
+  const scoreGap = Math.abs(vendorScores[top.id].adjusted - vendorScores[second.id].adjusted);
 
   return {
-    hpRaw,
-    lenovoRaw,
-    hpAdjusted,
-    lenovoAdjusted,
-    scoreGap: Math.abs(hpAdjusted - lenovoAdjusted),
-    currentWinner: hpAdjusted > lenovoAdjusted ? "HP WXP" : lenovoAdjusted > hpAdjusted ? "Lenovo xIQ" : "Tie"
+    hpRaw: vendorScores.hp.raw,
+    lenovoRaw: vendorScores.lenovo.raw,
+    nexthinkRaw: vendorScores.nexthink.raw,
+    hpAdjusted: vendorScores.hp.adjusted,
+    lenovoAdjusted: vendorScores.lenovo.adjusted,
+    nexthinkAdjusted: vendorScores.nexthink.adjusted,
+    vendors: vendorScores,
+    scoreGap,
+    currentWinner: scoreGap === 0 ? "Tie" : top.name
   };
 }
 
 function leadText(item) {
-  const gap = Number(item.hpScore) - Number(item.lenovoScore);
-  if (gap > 0) return `HP +${gap}`;
-  if (gap < 0) return `Lenovo +${Math.abs(gap)}`;
-  return "Tie";
+  const scores = VENDORS.map((vendor) => ({ vendor, score: vendorScore(item, vendor.id) })).sort((a, b) => b.score - a.score);
+  const topScore = scores[0].score;
+  const leaders = scores.filter((entry) => entry.score === topScore);
+  const secondScore = scores.find((entry) => entry.score < topScore)?.score ?? topScore;
+  if (leaders.length > 1) return leaders.length === VENDORS.length ? "Tie" : `${leaders.map((entry) => entry.vendor.shortName).join(" / ")} tie`;
+  return `${leaders[0].vendor.shortName} +${topScore - secondScore}`;
 }
 
 function getWinner() {
@@ -156,9 +182,9 @@ function getWinner() {
 }
 
 function getCategoryLeader(item) {
-  if (Number(item.hpScore) > Number(item.lenovoScore)) return "HP";
-  if (Number(item.lenovoScore) > Number(item.hpScore)) return "Lenovo";
-  return "Both vendors";
+  const scores = VENDORS.map((vendor) => ({ vendor, score: vendorScore(item, vendor.id) })).sort((a, b) => b.score - a.score);
+  const leaders = scores.filter((entry) => entry.score === scores[0].score);
+  return leaders.length === VENDORS.length ? "All vendors" : leaders.map((entry) => entry.vendor.shortName).join(" / ");
 }
 
 function hasEvidenceLink(item) {
@@ -200,7 +226,8 @@ function getRiskFlags() {
     const highWeight = isHighWeight(item);
     const lowConfidence = ["Low", "Unknown"].includes(item.confidence);
     const weakEvidence = ["Claimed", "Missing", "Unknown"].includes(item.evidence);
-    const tied = Number(item.hpScore) === Number(item.lenovoScore);
+    const scores = VENDORS.map((vendor) => vendorScore(item, vendor.id));
+    const tied = new Set(scores).size === 1;
     const noLinks = !hasEvidenceLink(item);
 
     if (highWeight && lowConfidence) {
@@ -235,7 +262,7 @@ function getRiskFlags() {
         severity: "Medium",
         title: `Tie in meaningful category: ${item.name}`,
         detail: "This category should be converted into a PoC test case instead of staying as a static score tie.",
-        owner: "Both vendors"
+        owner: "All vendors"
       });
     }
   });
@@ -376,15 +403,13 @@ function renderDashboard() {
   const scores = getDecisionScores();
   const winner = getWinner();
 
-  setText("hpScore", scores.hpAdjusted.toFixed(1));
-  setText("lenovoScore", scores.lenovoAdjusted.toFixed(1));
-  setText("hpAverage", `${scores.hpRaw.toFixed(0)}% raw weighted, average score ${averageScore("hp").toFixed(2)} / 5`);
-  setText("lenovoAverage", `${scores.lenovoRaw.toFixed(0)}% raw weighted, average score ${averageScore("lenovo").toFixed(2)} / 5`);
-  setText("hpAdjusted", `Evidence-adjusted score: ${scores.hpAdjusted.toFixed(1)}`);
-  setText("lenovoAdjusted", `Evidence-adjusted score: ${scores.lenovoAdjusted.toFixed(1)}`);
-
-  toggleHidden("hpBadge", winner !== "HP WXP");
-  toggleHidden("lenovoBadge", winner !== "Lenovo xIQ");
+  VENDORS.forEach((vendor) => {
+    const score = scores.vendors[vendor.id];
+    setText(`${vendor.id}Score`, score.adjusted.toFixed(1));
+    setText(`${vendor.id}Average`, `${score.raw.toFixed(0)}% raw weighted, average score ${averageScore(vendor.id).toFixed(2)} / 5`);
+    setText(`${vendor.id}Adjusted`, `Evidence-adjusted score: ${score.adjusted.toFixed(1)}`);
+    toggleHidden(`${vendor.id}Badge`, winner !== vendor.name);
+  });
 
   const tbody = document.getElementById("scoreTable");
   if (!tbody) return;
@@ -392,9 +417,8 @@ function renderDashboard() {
   tbody.innerHTML = capabilities.map((item) => `
     <tr>
       <td><div class="cap-name">${escapeHtml(item.name)}</div><div class="cap-group">${escapeHtml(item.group)}</div></td>
-      <td>${scoreSelect(item.id, "hpScore", item.hpScore)}</td>
-      <td>${scoreSelect(item.id, "lenovoScore", item.lenovoScore)}</td>
-      <td><strong class="${leadText(item).startsWith("HP") ? "hp-text" : leadText(item).startsWith("Lenovo") ? "lenovo-text" : ""}">${leadText(item)}</strong></td>
+      ${VENDORS.map((vendor) => `<td>${scoreSelect(item.id, vendor.scoreField, item[vendor.scoreField])}</td>`).join("")}
+      <td><strong class="${leadClass(item)}">${leadText(item)}</strong></td>
       <td><input type="range" min="1" max="15" value="${item.weight}" onchange="updateCapability('${item.id}', 'weight', Number(this.value))" /> <strong>${item.weight}</strong></td>
       <td><select onchange="updateCapability('${item.id}', 'confidence', this.value)">${["Low", "Medium", "High"].map((v) => `<option value="${v}" ${item.confidence === v ? "selected" : ""}>${v}</option>`).join("")}</select></td>
       <td><select onchange="updateCapability('${item.id}', 'evidence', this.value)">${["Claimed", "Demoed", "Documented", "PoC Validated"].map((v) => `<option value="${v}" ${item.evidence === v ? "selected" : ""}>${v}</option>`).join("")}</select></td>
@@ -402,6 +426,12 @@ function renderDashboard() {
       <td><input type="text" value="${escapeHtml(item.notes || "")}" onchange="updateCapability('${item.id}', 'notes', this.value)" /></td>
     </tr>
   `).join("");
+}
+
+function leadClass(item) {
+  const leader = getCategoryLeader(item);
+  const vendor = VENDORS.find((entry) => leader === entry.shortName);
+  return vendor ? vendor.textClass : "";
 }
 
 function scoreSelect(id, field, value) {
@@ -425,11 +455,11 @@ function renderCharts() {
   barChart = new Chart(barCtx, {
     type: "bar",
     data: {
-      labels: ["HP WXP", "Lenovo xIQ"],
+      labels: VENDORS.map((vendor) => vendor.name),
       datasets: [{
         label: "Evidence-Adjusted Score",
-        data: [Number(weightedScore("hp").toFixed(1)), Number(weightedScore("lenovo").toFixed(1))],
-        backgroundColor: ["rgba(2,132,199,0.85)", "rgba(220,38,38,0.85)"]
+        data: VENDORS.map((vendor) => Number(weightedScore(vendor.id).toFixed(1))),
+        backgroundColor: VENDORS.map((vendor) => vendor.color)
       }]
     },
     options: { responsive: true, scales: { y: { min: 0, max: 100 } } }
@@ -439,20 +469,12 @@ function renderCharts() {
     type: "radar",
     data: {
       labels: capabilities.map((item) => item.name),
-      datasets: [
-        {
-          label: "HP WXP",
-          data: capabilities.map((item) => item.hpScore),
-          borderColor: "rgba(2,132,199,1)",
-          backgroundColor: "rgba(2,132,199,0.22)"
-        },
-        {
-          label: "Lenovo xIQ",
-          data: capabilities.map((item) => item.lenovoScore),
-          borderColor: "rgba(220,38,38,1)",
-          backgroundColor: "rgba(220,38,38,0.22)"
-        }
-      ]
+      datasets: VENDORS.map((vendor) => ({
+        label: vendor.name,
+        data: capabilities.map((item) => vendorScore(item, vendor.id)),
+        borderColor: vendor.borderColor,
+        backgroundColor: vendor.color.replace("0.85", "0.22")
+      }))
     },
     options: { responsive: true, scales: { r: { min: 0, max: 5, ticks: { stepSize: 1 } } } }
   });
@@ -463,10 +485,13 @@ function renderCharts() {
   heatmap.innerHTML = capabilities.map((item) => `
     <div class="heat-row">
       <div><strong>${escapeHtml(item.name)}</strong></div>
-      <div class="heat-cell" style="background: rgba(2,132,199,${0.25 + item.hpScore * 0.13})">HP: ${item.hpScore}</div>
-      <div class="heat-cell" style="background: rgba(220,38,38,${0.25 + item.lenovoScore * 0.13})">Lenovo: ${item.lenovoScore}</div>
+      ${VENDORS.map((vendor) => `<div class="heat-cell" style="background: ${heatColor(vendor, vendorScore(item, vendor.id))}">${vendor.shortName}: ${vendorScore(item, vendor.id)}</div>`).join("")}
     </div>
   `).join("");
+}
+
+function heatColor(vendor, score) {
+  return vendor.color.replace("0.85", String(0.25 + Number(score) * 0.13));
 }
 
 function renderInsights() {
@@ -476,8 +501,8 @@ function renderInsights() {
 
   if (winnerText) {
     winnerText.innerHTML = winner === "Too close to call"
-      ? `<strong>Winner: Too close to call.</strong> The two platforms are within ${scores.scoreGap.toFixed(1)} evidence-adjusted points. Let PoC validation break the deadlock.`
-      : `<strong>Winner: ${winner}.</strong> ${winner} currently leads based on evidence-adjusted enterprise priorities. Raw score was HP ${scores.hpRaw.toFixed(1)} vs Lenovo ${scores.lenovoRaw.toFixed(1)}.`;
+      ? `<strong>Winner: Too close to call.</strong> The vendors are within ${scores.scoreGap.toFixed(1)} evidence-adjusted points. Let PoC validation break the deadlock.`
+      : `<strong>Winner: ${winner}.</strong> ${winner} currently leads based on evidence-adjusted enterprise priorities. Raw score was ${rawScoreSummary(scores)}.`;
   }
 
   renderDecisionGateCard();
@@ -486,17 +511,19 @@ function renderInsights() {
   renderSuggestedNextStepsCard();
   renderWinnerFlipSensitivityCard();
 
-  const hpLeads = capabilities.filter((item) => item.hpScore > item.lenovoScore).map((item) => item.name);
-  const lenovoLeads = capabilities.filter((item) => item.lenovoScore > item.hpScore).map((item) => item.name);
-  const ties = capabilities.filter((item) => item.hpScore === item.lenovoScore).map((item) => item.name);
+  const winnerLines = VENDORS.map((vendor) => {
+    const leads = capabilities.filter((item) => getCategoryLeader(item) === vendor.shortName).map((item) => item.name);
+    return insightLine(`${vendor.shortName} leads`, leads, vendor.badgeClass);
+  });
+  const ties = capabilities.filter((item) => getCategoryLeader(item).includes("/") || getCategoryLeader(item) === "All vendors").map((item) => item.name);
 
-  setHtml("categoryWinners", `${insightLine("HP leads", hpLeads, "blue")}${insightLine("Lenovo leads", lenovoLeads, "red")}${insightLine("Tied", ties, "gray")}`);
+  setHtml("categoryWinners", `${winnerLines.join("")}${insightLine("Tied", ties, "gray")}`);
 
   const tradeoffs = capabilities
     .map((item) => ({
       ...item,
-      impact: Math.abs(item.hpScore - item.lenovoScore) * item.weight * confidenceFactor(item.confidence) * evidenceFactor(item.evidence),
-      leader: item.hpScore > item.lenovoScore ? "HP" : item.lenovoScore > item.hpScore ? "Lenovo" : "Tie"
+      impact: categoryScoreGap(item) * item.weight * confidenceFactor(item.confidence) * evidenceFactor(item.evidence),
+      leader: getCategoryLeader(item)
     }))
     .filter((item) => item.impact > 0)
     .sort((a, b) => b.impact - a.impact)
@@ -504,11 +531,25 @@ function renderInsights() {
 
   setHtml("tradeoffs", tradeoffs.map((item) => `
     <div class="line-item">
-      <span class="badge ${item.leader === "HP" ? "blue" : "red"}">${item.leader}</span>
+      <span class="badge ${leaderBadgeClass(item.leader)}">${escapeHtml(item.leader)}</span>
       <strong>${escapeHtml(item.name)}</strong>
       <span class="muted">adjusted impact ${item.impact.toFixed(1)}, confidence ${item.confidence}, evidence ${item.evidence}</span>
     </div>
   `).join(""));
+}
+
+function rawScoreSummary(scores) {
+  return VENDORS.map((vendor) => `${vendor.shortName} ${scores.vendors[vendor.id].raw.toFixed(1)}`).join(" vs ");
+}
+
+function categoryScoreGap(item) {
+  const sorted = VENDORS.map((vendor) => vendorScore(item, vendor.id)).sort((a, b) => b - a);
+  return sorted[0] - sorted[1];
+}
+
+function leaderBadgeClass(leader) {
+  const vendor = VENDORS.find((entry) => leader === entry.shortName);
+  return vendor ? vendor.badgeClass : "gray";
 }
 
 function renderDecisionGateCard() {
@@ -622,6 +663,14 @@ function renderQuestions() {
     "How are SaaS integrations licensed and supported?"
   ];
 
+  const nexthinkQuestions = [
+    "Which endpoint telemetry signals are available out of the box, and how are they normalized across mixed fleets?",
+    "How are Experience Scores calculated, weighted, and audited over time?",
+    "Which remediation actions can be automated safely, and what approval or rollback controls exist?",
+    "How does Nexthink integrate with ServiceNow incidents, CMDB, and employee-facing workflows?",
+    "What AI recommendations are explainable to admins, and what data boundaries govern assistant responses?"
+  ];
+
   const probes = capabilities
     .filter((item) => isHighWeight(item) && item.evidence !== "PoC Validated")
     .flatMap((item) => [
@@ -631,6 +680,7 @@ function renderQuestions() {
 
   setHtml("hpQuestions", renderQuestionList(hpQuestions));
   setHtml("lenovoQuestions", renderQuestionList(lenovoQuestions));
+  setHtml("nexthinkQuestions", renderQuestionList(nexthinkQuestions));
   setHtml("probeQuestions", renderQuestionList(probes));
 }
 
@@ -639,7 +689,7 @@ function renderQuestionList(questions) {
 }
 
 function renderPoc() {
-  const phases = ["Day 0–30: Foundation", "Day 31–60: Workflows", "Day 61–90: Value"];
+  const phases = ["Day 0-30: Foundation", "Day 31-60: Workflows", "Day 61-90: Value"];
 
   setHtml("pocPlan", phases.map((phase) => `
     <div class="poc-phase">
@@ -666,8 +716,7 @@ function renderExport() {
   const gate = getDecisionGate();
 
   setHtml("snapshot", `
-    HP WXP adjusted: <strong>${scores.hpAdjusted.toFixed(1)}</strong> |
-    Lenovo xIQ adjusted: <strong>${scores.lenovoAdjusted.toFixed(1)}</strong> |
+    ${VENDORS.map((vendor) => `${vendor.name} adjusted: <strong>${scores.vendors[vendor.id].adjusted.toFixed(1)}</strong>`).join(" | ")} |
     Winner: <strong>${escapeHtml(getWinner())}</strong> |
     Gate: <strong>${escapeHtml(gate.label)}</strong>
   `);
@@ -694,13 +743,12 @@ function exportJson() {
 }
 
 function exportCsv() {
-  const header = ["Capability", "Group", "HP Score", "Lenovo Score", "Lead", "Weight", "Confidence", "Evidence", "Evidence Links", "Notes"];
+  const header = ["Capability", "Group", ...VENDORS.map((vendor) => `${vendor.shortName} Score`), "Lead", "Weight", "Confidence", "Evidence", "Evidence Links", "Notes"];
 
   const rows = capabilities.map((item) => [
     item.name,
     item.group,
-    item.hpScore,
-    item.lenovoScore,
+    ...VENDORS.map((vendor) => item[vendor.scoreField]),
     leadText(item),
     item.weight,
     item.confidence,
@@ -751,8 +799,8 @@ function generateExecutiveReport() {
   const topTradeoffs = capabilities
     .map((item) => ({
       ...item,
-      impact: Math.abs(item.hpScore - item.lenovoScore) * item.weight * confidenceFactor(item.confidence) * evidenceFactor(item.evidence),
-      leader: item.hpScore > item.lenovoScore ? "HP" : item.lenovoScore > item.hpScore ? "Lenovo" : "Tie"
+      impact: categoryScoreGap(item) * item.weight * confidenceFactor(item.confidence) * evidenceFactor(item.evidence),
+      leader: getCategoryLeader(item)
     }))
     .filter((item) => item.impact > 0)
     .sort((a, b) => b.impact - a.impact)
@@ -764,12 +812,12 @@ function generateExecutiveReport() {
   report.classList.remove("hidden");
 
   report.innerHTML = `
-    <div class="report-title">Executive Decision Report: HP WXP vs Lenovo xIQ</div>
+    <div class="report-title">Executive Decision Report: ${VENDORS.map((vendor) => vendor.name).join(" vs ")}</div>
 
     <div class="report-section">
       <h4>1. Recommendation</h4>
-      <p>Current evidence-adjusted winner: <strong>${escapeHtml(getWinner())}</strong>. HP WXP scored <strong>${scores.hpAdjusted.toFixed(1)}</strong>. Lenovo xIQ scored <strong>${scores.lenovoAdjusted.toFixed(1)}</strong>.</p>
-      <p class="muted">Raw score before evidence and confidence discount: HP ${scores.hpRaw.toFixed(1)} vs Lenovo ${scores.lenovoRaw.toFixed(1)}.</p>
+      <p>Current evidence-adjusted winner: <strong>${escapeHtml(getWinner())}</strong>. ${VENDORS.map((vendor) => `${vendor.name} scored <strong>${scores.vendors[vendor.id].adjusted.toFixed(1)}</strong>`).join(". ")}.</p>
+      <p class="muted">Raw score before evidence and confidence discount: ${rawScoreSummary(scores)}.</p>
     </div>
 
     <div class="report-section">

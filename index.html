@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DEX Tool Comparison Portal | HP WXP vs Lenovo xIQ</title>
+  <title>DEX Tool Comparison Portal | HP WXP vs Lenovo xIQ vs Nexthink</title>
 
   <link rel="stylesheet" href="styles.css" />
 
@@ -14,7 +14,7 @@
   <header class="hero">
     <div>
       <p class="eyebrow">DEX Tool Comparison Portal</p>
-      <h1>HP WXP vs Lenovo xIQ</h1>
+      <h1>HP WXP vs Lenovo xIQ vs Nexthink</h1>
       <p class="hero-copy">
         Evidence-aware scorecard, PoC tracker, decision risk engine, and executive report generator.
       </p>
@@ -64,6 +64,17 @@
           <p id="lenovoAverage" class="muted"></p>
           <p id="lenovoAdjusted" class="adjusted-score"></p>
         </div>
+
+        <div class="card score-card nexthink-card">
+          <div class="score-topline">
+            <h3>Nexthink</h3>
+            <span id="nexthinkBadge" class="winner-badge hidden">Current Winner</span>
+          </div>
+
+          <div id="nexthinkScore" class="big-score">0.0</div>
+          <p id="nexthinkAverage" class="muted"></p>
+          <p id="nexthinkAdjusted" class="adjusted-score"></p>
+        </div>
       </div>
 
       <div class="card">
@@ -76,6 +87,7 @@
                 <th>Capability</th>
                 <th>HP</th>
                 <th>Lenovo</th>
+                <th>Nexthink</th>
                 <th>Lead</th>
                 <th>Weight</th>
                 <th>Confidence</th>
@@ -185,6 +197,11 @@
         <div class="card">
           <h3>Lenovo xIQ Questions</h3>
           <div id="lenovoQuestions"></div>
+        </div>
+
+        <div class="card">
+          <h3>Nexthink Questions</h3>
+          <div id="nexthinkQuestions"></div>
         </div>
       </div>
 
