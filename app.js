@@ -65,7 +65,9 @@ function load(key, fallback) {
     const saved = localStorage.getItem(key);
     if (!saved) return clone(fallback);
     const parsed = JSON.parse(saved);
-    return key.includes("capabilities") ? normalizeCapabilities(parsed) : Array.isArray(parsed) ? parsed : clone(fallback);
+    if (key.includes("capabilities")) return normalizeCapabilities(parsed);
+    if (key.includes("poc-tasks")) return normalizePocTasks(parsed);
+    return Array.isArray(parsed) ? parsed : clone(fallback);
   } catch {
     return clone(fallback);
   }
@@ -82,6 +84,32 @@ function normalizeCapabilities(data) {
       evidenceLinks: Array.isArray(item.evidenceLinks) ? item.evidenceLinks.join(", ") : item.evidenceLinks || "",
       notes: item.notes || "",
       proofNeeded: item.proofNeeded || fallback.proofNeeded || []
+    };
+  });
+}
+
+function normalizePocTasks(data) {
+  if (!Array.isArray(data)) return clone(initialPocTasks);
+
+  const phaseAliases = {
+    "Day 0–30: Foundation": "Day 0-30: Foundation",
+    "Day 31–60: Workflows": "Day 31-60: Workflows",
+    "Day 61–90: Value": "Day 61-90: Value",
+    "Day 0â€“30: Foundation": "Day 0-30: Foundation",
+    "Day 31â€“60: Workflows": "Day 31-60: Workflows",
+    "Day 61â€“90: Value": "Day 61-90: Value"
+  };
+
+  return initialPocTasks.map((fallback) => {
+    const task = data.find((item) => item.id === fallback.id) || {};
+    return {
+      ...fallback,
+      ...task,
+      phase: phaseAliases[task.phase] || fallback.phase,
+      task: task.task || fallback.task,
+      owner: task.owner || "",
+      dueDate: task.dueDate || "",
+      done: Boolean(task.done)
     };
   });
 }
@@ -126,13 +154,7 @@ function rawWeightedScore(vendor) {
 }
 
 function weightedScore(vendor) {
-  const weightTotal = totalWeight();
-  const weighted = capabilities.reduce((sum, item) => {
-    const score = vendorScore(item, vendor);
-    return sum + score * Number(item.weight) * confidenceFactor(item.confidence) * evidenceFactor(item.evidence);
-  }, 0);
-
-  return weightTotal ? (weighted / (weightTotal * 5)) * 100 : 0;
+  return rawWeightedScore(vendor);
 }
 
 function averageScore(vendor) {
@@ -217,7 +239,7 @@ function getRiskFlags() {
     risks.push({
       severity: "High",
       title: "Overall score gap is too narrow",
-      detail: `The adjusted score gap is only ${scores.scoreGap.toFixed(1)} points. Treat this as a tie until PoC evidence breaks the deadlock.`,
+      detail: `The weighted score gap is only ${scores.scoreGap.toFixed(1)} points. Treat this as a tie until PoC evidence breaks the deadlock.`,
       owner: "Decision team"
     });
   }
@@ -310,7 +332,7 @@ function getDecisionGate() {
     status: "READY",
     label: "Ready to select",
     cssClass: "status-ready",
-    message: "Evidence quality is sufficient and the adjusted score gap is meaningful enough to support a recommendation."
+    message: "Evidence quality is sufficient and the weighted score gap is meaningful enough to support a recommendation."
   };
 }
 
@@ -407,7 +429,7 @@ function renderDashboard() {
     const score = scores.vendors[vendor.id];
     setText(`${vendor.id}Score`, score.adjusted.toFixed(1));
     setText(`${vendor.id}Average`, `${score.raw.toFixed(0)}% raw weighted, average score ${averageScore(vendor.id).toFixed(2)} / 5`);
-    setText(`${vendor.id}Adjusted`, `Evidence-adjusted score: ${score.adjusted.toFixed(1)}`);
+    setText(`${vendor.id}Adjusted`, `Weighted score: ${score.adjusted.toFixed(1)}`);
     toggleHidden(`${vendor.id}Badge`, winner !== vendor.name);
   });
 
@@ -457,7 +479,7 @@ function renderCharts() {
     data: {
       labels: VENDORS.map((vendor) => vendor.name),
       datasets: [{
-        label: "Evidence-Adjusted Score",
+        label: "Weighted Score",
         data: VENDORS.map((vendor) => Number(weightedScore(vendor.id).toFixed(1))),
         backgroundColor: VENDORS.map((vendor) => vendor.color)
       }]
@@ -501,8 +523,8 @@ function renderInsights() {
 
   if (winnerText) {
     winnerText.innerHTML = winner === "Too close to call"
-      ? `<strong>Winner: Too close to call.</strong> The vendors are within ${scores.scoreGap.toFixed(1)} evidence-adjusted points. Let PoC validation break the deadlock.`
-      : `<strong>Winner: ${winner}.</strong> ${winner} currently leads based on evidence-adjusted enterprise priorities. Raw score was ${rawScoreSummary(scores)}.`;
+      ? `<strong>Winner: Too close to call.</strong> The vendors are within ${scores.scoreGap.toFixed(1)} weighted points. Let PoC validation break the deadlock.`
+      : `<strong>Winner: ${winner}.</strong> ${winner} currently leads based on weighted enterprise priorities. Score breakdown: ${rawScoreSummary(scores)}.`;
   }
 
   renderDecisionGateCard();
@@ -533,7 +555,7 @@ function renderInsights() {
     <div class="line-item">
       <span class="badge ${leaderBadgeClass(item.leader)}">${escapeHtml(item.leader)}</span>
       <strong>${escapeHtml(item.name)}</strong>
-      <span class="muted">adjusted impact ${item.impact.toFixed(1)}, confidence ${item.confidence}, evidence ${item.evidence}</span>
+      <span class="muted">weighted impact ${item.impact.toFixed(1)}, confidence ${item.confidence}, evidence ${item.evidence}</span>
     </div>
   `).join(""));
 }
@@ -630,8 +652,8 @@ function renderWinnerFlipSensitivityCard() {
 
   setHtml("winnerFlipSensitivity", `
     <div class="decision-meta">
-      <span><strong>Current adjusted winner:</strong> ${escapeHtml(sensitivity.currentWinner)}</span>
-      <span><strong>Adjusted score gap:</strong> ${sensitivity.scoreGap}</span>
+      <span><strong>Current weighted winner:</strong> ${escapeHtml(sensitivity.currentWinner)}</span>
+      <span><strong>Weighted score gap:</strong> ${sensitivity.scoreGap}</span>
     </div>
     ${candidatesHtml}
   `);
@@ -716,7 +738,7 @@ function renderExport() {
   const gate = getDecisionGate();
 
   setHtml("snapshot", `
-    ${VENDORS.map((vendor) => `${vendor.name} adjusted: <strong>${scores.vendors[vendor.id].adjusted.toFixed(1)}</strong>`).join(" | ")} |
+    ${VENDORS.map((vendor) => `${vendor.name} weighted: <strong>${scores.vendors[vendor.id].adjusted.toFixed(1)}</strong>`).join(" | ")} |
     Winner: <strong>${escapeHtml(getWinner())}</strong> |
     Gate: <strong>${escapeHtml(gate.label)}</strong>
   `);
@@ -816,8 +838,8 @@ function generateExecutiveReport() {
 
     <div class="report-section">
       <h4>1. Recommendation</h4>
-      <p>Current evidence-adjusted winner: <strong>${escapeHtml(getWinner())}</strong>. ${VENDORS.map((vendor) => `${vendor.name} scored <strong>${scores.vendors[vendor.id].adjusted.toFixed(1)}</strong>`).join(". ")}.</p>
-      <p class="muted">Raw score before evidence and confidence discount: ${rawScoreSummary(scores)}.</p>
+      <p>Current weighted winner: <strong>${escapeHtml(getWinner())}</strong>. ${VENDORS.map((vendor) => `${vendor.name} scored <strong>${scores.vendors[vendor.id].adjusted.toFixed(1)}</strong>`).join(". ")}.</p>
+      <p class="muted">Weighted score breakdown: ${rawScoreSummary(scores)}.</p>
     </div>
 
     <div class="report-section">
